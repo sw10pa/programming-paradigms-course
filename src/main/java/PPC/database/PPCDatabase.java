@@ -13,7 +13,6 @@ public class PPCDatabase {
     public PPCDatabase() throws SQLException, ClassNotFoundException {
         openConnection();
         createDatabase();
-
         createStudentsTable();
         createLecturersTable();
     }
