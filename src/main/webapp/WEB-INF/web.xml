@@ -15,4 +15,16 @@
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>homepage</servlet-name>
+    <servlet-class>PPC.controller.Homepage</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>homepage</servlet-name>
+    <url-pattern></url-pattern>
+  </servlet-mapping>
+
 </web-app>
