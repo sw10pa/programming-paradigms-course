@@ -32,10 +32,8 @@ public class PPCDatabaseManager {
         PreparedStatement preparedStatement = connection.prepareStatement
                 ("SELECT * FROM students WHERE email = ?;");
         preparedStatement.setString(1, email);
-
         ResultSet resultSet = preparedStatement.executeQuery();
         if (!resultSet.next()) return null;
-
         return buildStudent(resultSet);
     }
 
@@ -68,10 +66,8 @@ public class PPCDatabaseManager {
         PreparedStatement preparedStatement = connection.prepareStatement
                 ("SELECT * FROM lecturers WHERE email = ?;");
         preparedStatement.setString(1, email);
-
         ResultSet resultSet = preparedStatement.executeQuery();
         if (!resultSet.next()) return null;
-
         return buildLecturer(resultSet);
     }
 
