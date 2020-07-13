@@ -17,6 +17,10 @@ public class PPCDatabase {
         createLecturersTable();
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     private void openConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection("jdbc:mysql://localhost:" + PORT, USER, PASS);
