@@ -39,7 +39,7 @@ public class AuthenticationHandler {
             return ret;
         }
         //ses.setAttribute(user.getStatus(), user);
-        if(user.getStatus() == User.STUDENT){
+        if(user.getStatus().equals(User.STUDENT)){
             resp.sendRedirect("/" + User.STUDENT + "-page");
         }else{
             resp.sendRedirect("/" + User.LECTURER + "-page");
