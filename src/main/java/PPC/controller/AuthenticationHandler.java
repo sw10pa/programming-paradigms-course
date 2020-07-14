@@ -10,21 +10,21 @@ import org.springframework.web.servlet.*;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class AuthenticationController {
+public class AuthenticationHandler {
 
     private final PPCDatabaseManager dbManager;
 
-    public AuthenticationController() throws SQLException, ClassNotFoundException {
+    public AuthenticationHandler() throws SQLException, ClassNotFoundException {
         PPCDatabase ppcDatabase = new PPCDatabase();
         dbManager = new PPCDatabaseManager(ppcDatabase.getConnection());
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping("/login")
     public String login() {
         return "log-in";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping("/login")
     public ModelAndView login(HttpServletRequest req,
                               HttpServletResponse resp,
                               HttpSession ses,
