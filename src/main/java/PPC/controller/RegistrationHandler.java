@@ -2,7 +2,7 @@ package PPC.controller;
 
 import PPC.database.PPCDatabase;
 import PPC.database.PPCDatabaseManager;
-import PPC.model.Student;
+import PPC.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,13 +36,13 @@ public class RegistrationHandler {
                              @RequestParam String username,
                              @RequestParam String password) throws IOException, SQLException {
         ModelAndView ret = new ModelAndView("sign-up");
-        Student student = dbManager.getStudentByEmail(username);
-        if (student != null) {
+        User user = dbManager.getUserByEmail(username);
+        if (user != null) {
             ret.addObject("error", "Username " + username + " is already taken");
             ret.addObject("username", username);
             return ret;
         }
-        dbManager.addStudent(new Student(0, firstName,lastName,username, password));
+        dbManager.addUser(new User(firstName,lastName,username, password));
         resp.sendRedirect("/login");
         return null;
     }

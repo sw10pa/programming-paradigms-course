@@ -32,24 +32,17 @@ public class AuthenticationHandler {
                               @RequestParam String password) throws IOException, SQLException {
 
         ModelAndView ret = new ModelAndView("log-in");
-        Lecturer lecturer = dbManager.getLecturerByEmail(username);
-        if (lecturer == null) {
-            Student student = dbManager.getStudentByEmail(username);
-            if (student == null || !student.getPassword().equals(password)) {
-                ret.addObject("error", "Incorrect username or password");
-                ret.addObject("username", username);
-                return ret;
-            }
-            ses.setAttribute("student", student);
-            resp.sendRedirect("/student-page");
-        } else {
-            if (!lecturer.getPassword().equals(password)) {
-                ret.addObject("error", "Incorrect username or password");
-                ret.addObject("username", username);
-                return ret;
-            }
-            ses.setAttribute("lecturer", lecturer);
-            resp.sendRedirect("/lecturer-page");
+        User user = dbManager.getUserByEmail(username);
+        if(user == null || !user.getPassword().equals(password)){
+            ret.addObject("error", "Incorrect username or password");
+            ret.addObject("username", username);
+            return ret;
+        }
+        //ses.setAttribute(user.getStatus(), user);
+        if(user.getStatus() == User.STUDENT){
+            resp.sendRedirect("/" + User.STUDENT + "-page");
+        }else{
+            resp.sendRedirect("/" + User.LECTURER + "-page");
         }
 
         return ret;
@@ -60,5 +53,4 @@ public class AuthenticationHandler {
         ses.invalidate();
         resp.sendRedirect("/log-in");
     }
-
 }
