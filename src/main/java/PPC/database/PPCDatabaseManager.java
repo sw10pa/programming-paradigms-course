@@ -11,72 +11,40 @@ public class PPCDatabaseManager {
         this.connection = connection;
     }
 
-    public void addStudent(Student student) throws SQLException {
+    public void addUser(User user) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement
-                ("INSERT INTO students (first_name, last_name, email, password) VALUES (?, ?, ?, ?);");
-        preparedStatement.setString(1, student.getFirstName());
-        preparedStatement.setString(2, student.getLastName());
-        preparedStatement.setString(3, student.getEmail());
-        preparedStatement.setString(4, student.getPassword());
+                ("INSERT INTO users (first_name, last_name, email, password, status) VALUES (?, ?, ?, ?, ?);");
+        preparedStatement.setString(1, user.getFirstName());
+        preparedStatement.setString(2, user.getLastName());
+        preparedStatement.setString(3, user.getEmail());
+        preparedStatement.setString(4, user.getPassword());
+        preparedStatement.setString(5, User.STUDENT);
         preparedStatement.execute();
     }
 
-    public void removeStudentByEmail(String email) throws SQLException {
+    public void removeUserByEmail(String email) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement
-                ("DELETE FROM students WHERE email = ?;");
+                ("DELETE FROM users WHERE email = ?;");
         preparedStatement.setString(1, email);
         preparedStatement.execute();
     }
 
-    public Student getStudentByEmail(String email) throws SQLException {
+    public User getUserByEmail(String email) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement
-                ("SELECT * FROM students WHERE email = ?;");
-        preparedStatement.setString(1, email);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (!resultSet.next()) return null;
-        return buildStudent(resultSet);
-    }
-
-    private Student buildStudent(ResultSet resultSet) throws SQLException {
-        return new Student(resultSet.getInt(1),
-                resultSet.getString(2),
-                resultSet.getString(3),
-                resultSet.getString(4),
-                resultSet.getString(5));
-    }
-
-    public void addLecturer(Lecturer lecturer) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement
-                ("INSERT INTO lecturers (first_name, last_name, email, password) VALUES (?, ?, ?, ?);");
-        preparedStatement.setString(1, lecturer.getFirstName());
-        preparedStatement.setString(2, lecturer.getLastName());
-        preparedStatement.setString(3, lecturer.getEmail());
-        preparedStatement.setString(4, lecturer.getPassword());
-        preparedStatement.execute();
-    }
-
-    public void removeLecturerByEmail(String email) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement
-                ("DELETE FROM lecturers WHERE email = ?;");
-        preparedStatement.setString(1, email);
-        preparedStatement.execute();
-    }
-
-    public Lecturer getLecturerByEmail(String email) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement
-                ("SELECT * FROM lecturers WHERE email = ?;");
+                ("SELECT * FROM users WHERE email = ?;");
         preparedStatement.setString(1, email);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (!resultSet.next()) return null;
-        return buildLecturer(resultSet);
+        return buildUser(resultSet);
     }
 
-    private Lecturer buildLecturer(ResultSet resultSet) throws SQLException {
-        return new Lecturer(resultSet.getInt(1),
+    private User buildUser(ResultSet resultSet) throws SQLException {
+        return new User(resultSet.getInt(1),
                 resultSet.getString(2),
                 resultSet.getString(3),
                 resultSet.getString(4),
-                resultSet.getString(5));
+                resultSet.getString(5),
+                resultSet.getString(6));
     }
 
 }

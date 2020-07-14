@@ -4,7 +4,6 @@ import java.sql.*;
 
 public class PPCDatabase {
 
-    private static final String PORT = "3306";
     private static final String USER = "root";
     private static final String PASS = "Stephane27";
 
@@ -13,8 +12,7 @@ public class PPCDatabase {
     public PPCDatabase() throws SQLException, ClassNotFoundException {
         openConnection();
         createDatabase();
-        createStudentsTable();
-        createLecturersTable();
+        createUsersTable();
     }
 
     public Connection getConnection() {
@@ -23,7 +21,7 @@ public class PPCDatabase {
 
     private void openConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:" + PORT, USER, PASS);
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", USER, PASS);
     }
 
     private void createDatabase() throws SQLException {
@@ -32,24 +30,15 @@ public class PPCDatabase {
         statement.execute("USE ppc;");
     }
 
-    private void createStudentsTable() throws SQLException {
+    private void createUsersTable() throws SQLException {
         Statement statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS students" +
-                "(student_id INT(6) PRIMARY KEY AUTO_INCREMENT," +
-                " first_name VARCHAR(25) NOT NULL," +
-                " last_name VARCHAR(25) NOT NULL," +
-                " email VARCHAR(25) NOT NULL UNIQUE," +
-                " password VARCHAR(25) NOT NULL);");
-    }
-
-    private void createLecturersTable() throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS lecturers" +
-                "(lecturer_id INT(6) PRIMARY KEY AUTO_INCREMENT," +
-                " first_name VARCHAR(25) NOT NULL," +
-                " last_name VARCHAR(25) NOT NULL," +
-                " email VARCHAR(25) NOT NULL UNIQUE," +
-                " password VARCHAR(25) NOT NULL);");
+        statement.execute("CREATE TABLE IF NOT EXISTS users" +
+                "(user_id INT(6) PRIMARY KEY AUTO_INCREMENT," +
+                " first_name VARCHAR(30) NOT NULL," +
+                " last_name VARCHAR(30) NOT NULL," +
+                " email VARCHAR(30) NOT NULL UNIQUE," +
+                " password VARCHAR(30) NOT NULL," +
+                " status VARCHAR(3) CHECK (status IN ('ADM', 'LEC', 'STU')));");
     }
 
 }
