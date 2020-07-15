@@ -3,7 +3,7 @@
 
 <head>
     <title>PPC</title>
-    <link rel="stylesheet" type="text/css" href="style/styleCSS.css">
+    <link href="${pageContext.request.contextPath}/resources/style/styleCSS.css" rel="stylesheet" >
     <script type="text/javascript" src="index.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"> </script>
 </head>
