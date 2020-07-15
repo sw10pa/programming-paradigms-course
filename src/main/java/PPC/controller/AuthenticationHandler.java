@@ -9,6 +9,8 @@ import org.springframework.stereotype.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @Controller
 public class AuthenticationHandler {
 
@@ -19,9 +21,9 @@ public class AuthenticationHandler {
         dbManager = new PPCDatabaseManager(ppcDatabase.getConnection());
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "log-in";
+    @GetMapping(value = { "/", "/login"})
+    public ModelAndView login() {
+        return new ModelAndView("log-in");
     }
 
     @PostMapping("/login")
