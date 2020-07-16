@@ -26,7 +26,7 @@ public class RegistrationHandler {
 
     @GetMapping("/signup")
     public String get() {
-        return "sign-up";
+        return "log-in";
     }
 
     @PostMapping("/signup")
@@ -35,14 +35,16 @@ public class RegistrationHandler {
                              @RequestParam String lastName,
                              @RequestParam String username,
                              @RequestParam String password) throws IOException, SQLException {
-        ModelAndView ret = new ModelAndView("sign-up");
+        ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
         if (user != null) {
             ret.addObject("error", "Username " + username + " is already taken");
             ret.addObject("username", username);
             return ret;
         }
-        dbManager.addUser(new User(firstName,lastName,username, password));
+
+        //carielebze gasasworebelia, aseve duplicatebze
+        dbManager.addUser(new User(firstName, lastName, username, password));
         resp.sendRedirect("/login");
         return null;
     }

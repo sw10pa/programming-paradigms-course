@@ -14,18 +14,18 @@
 <body>
 <div class="login-page">
     <div class="form">
-        <form class="register-form">
-            <input type="text" placeholder="First Name"/>
-            <input type="text" placeholder="Last Name"/>
-            <input type="password" placeholder="Password"/>
-            <input type="text" placeholder="Email"/>
-            <button>create</button>
+        <form action="/signup" method="POST" class="register-form">
+            <input type="text" placeholder="First Name" name="firstName"/>
+            <input type="text" placeholder="Last Name" name="lastName"/>
+            <input type="password" placeholder="Password" name="password"/>
+            <input type="text" placeholder="Email" name="username"/>
+            <button type = "submit">create</button>
             <p class="message">Already registered? <a href="#" onclick=swapForm()>Sign In</a></p>
         </form>
-        <form class="login-form">
-            <input type="text" placeholder="Email"/>
-            <input type="password" placeholder="Password"/>
-            <button>login</button>
+        <form action="/login" method="POST" class="login-form">
+            <input type="text" placeholder="Email" name="username"/>
+            <input type="password" placeholder="Password" name="password"/>
+            <button type = "submit">login</button>
             <p class="message">Not registered? <a href="#" onclick=swapForm()>Create an account</a></p>
         </form>
     </div>

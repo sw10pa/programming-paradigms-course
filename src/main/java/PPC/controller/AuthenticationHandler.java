@@ -1,15 +1,20 @@
 package PPC.controller;
 
-import java.io.*;
-import java.sql.*;
-import PPC.model.*;
-import PPC.database.*;
-import javax.servlet.http.*;
-import org.springframework.stereotype.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.bind.annotation.*;
+import PPC.database.PPCDatabase;
+import PPC.database.PPCDatabaseManager;
+import PPC.model.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.SQLException;
 
 @Controller
 public class AuthenticationHandler {
@@ -21,12 +26,12 @@ public class AuthenticationHandler {
         dbManager = new PPCDatabaseManager(ppcDatabase.getConnection());
     }
 
-    @GetMapping(value = { "/", "/login"})
+    @GetMapping(value = {"/", "/login"})
     public ModelAndView login() {
         return new ModelAndView("log-in");
     }
 
-    @PostMapping("/login")
+    @PostMapping(value = {"/", "/login"})
     public ModelAndView login(HttpServletRequest req,
                               HttpServletResponse resp,
                               HttpSession ses,
@@ -35,19 +40,14 @@ public class AuthenticationHandler {
 
         ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
-        if(user == null || !user.getPassword().equals(password)){
+        if (user == null || !user.getPassword().equals(password)) {
             ret.addObject("error", "Incorrect username or password");
             ret.addObject("username", username);
             return ret;
         }
-        //ses.setAttribute(user.getStatus(), user);
-        if(user.getStatus().equals(User.STUDENT)){
-            resp.sendRedirect("/student-page");
-        }else{
-            resp.sendRedirect("/lecturer-page");
-        }
-
-        return ret;
+        ses.setAttribute("user", user);
+        resp.sendRedirect("/home");
+        return null;
     }
 
     @RequestMapping("/logout")
