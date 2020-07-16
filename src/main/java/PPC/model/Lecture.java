@@ -1,7 +1,6 @@
 package PPC.model;
 
 import java.io.*;
-import PPC.filesystem.*;
 
 public class Lecture {
 
@@ -20,7 +19,6 @@ public class Lecture {
     public Lecture(String lectureName) throws IOException {
         this.lectureName = lectureName;
         fileName = lectureName + ".txt";
-        FileManager.createFile(LECTURE_FILES_PATH, fileName);
     }
 
     public int getLectureId() {

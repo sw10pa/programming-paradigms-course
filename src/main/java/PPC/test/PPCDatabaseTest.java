@@ -1,5 +1,6 @@
 package PPC.test;
 
+import java.io.*;
 import java.sql.*;
 import PPC.model.*;
 import PPC.database.*;
@@ -8,11 +9,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PPCDatabaseTest {
 
-    @Test
-    public void PPCDatabaseManagerTest() throws SQLException, ClassNotFoundException {
-        PPCDatabase ppcDatabase = new PPCDatabase();
-        PPCDatabaseManager dbManager = new PPCDatabaseManager(ppcDatabase.getConnection());
+    PPCDatabaseManager dbManager;
 
+    @BeforeEach
+    public void SetUp() throws SQLException, ClassNotFoundException {
+        PPCDatabase ppcDatabase = new PPCDatabase();
+        dbManager = new PPCDatabaseManager(ppcDatabase.getConnection());
+    }
+
+    @Test
+    public void UsersTableTest() throws SQLException {
         User dchec = new User("Davit", "Chechelashvili", "dchec18@freeuni.edu.ge", "Davit13");
         User sgurg = new User("Stepane", "Gurgenidze", "sgurg18@freeuni.edu.ge", "Stepane27");
         User nadei = new User("Nikoloz", "Adeishvili", "nadei18@freeuni.edu.ge", "Nikoloz29");
@@ -86,6 +92,54 @@ public class PPCDatabaseTest {
         assertNull(sgurg);
         assertNull(nadei);
         assertNull(akvin);
+    }
+
+    @Test
+    public void LecturesTableTest() throws SQLException, IOException {
+        Lecture lecture1 = new Lecture("Lecture 1");
+        Lecture lecture2 = new Lecture("Lecture 2");
+        Lecture lecture3 = new Lecture("Lecture 3");
+        Lecture lecture4 = new Lecture("Lecture 4");
+
+        dbManager.addLecture(lecture1);
+        dbManager.addLecture(lecture2);
+        dbManager.addLecture(lecture3);
+        dbManager.addLecture(lecture4);
+
+        lecture1 = dbManager.getLectureByName("Lecture 1");
+        lecture2 = dbManager.getLectureByName("Lecture 2");
+        lecture3 = dbManager.getLectureByName("Lecture 3");
+        lecture4 = dbManager.getLectureByName("Lecture 4");
+
+        assertEquals(1, lecture1.getLectureId());
+        assertEquals(2, lecture2.getLectureId());
+        assertEquals(3, lecture3.getLectureId());
+        assertEquals(4, lecture4.getLectureId());
+
+        assertEquals("Lecture 1", lecture1.getLectureName());
+        assertEquals("Lecture 2", lecture2.getLectureName());
+        assertEquals("Lecture 3", lecture3.getLectureName());
+        assertEquals("Lecture 4", lecture4.getLectureName());
+
+        assertEquals("Lecture 1.txt", lecture1.getFileName());
+        assertEquals("Lecture 2.txt", lecture2.getFileName());
+        assertEquals("Lecture 3.txt", lecture3.getFileName());
+        assertEquals("Lecture 4.txt", lecture4.getFileName());
+
+        dbManager.removeLectureByName("Lecture 1");
+        dbManager.removeLectureByName("Lecture 2");
+        dbManager.removeLectureByName("Lecture 3");
+        dbManager.removeLectureByName("Lecture 4");
+
+        lecture1 = dbManager.getLectureByName("Lecture 1");
+        lecture2 = dbManager.getLectureByName("Lecture 2");
+        lecture3 = dbManager.getLectureByName("Lecture 3");
+        lecture4 = dbManager.getLectureByName("Lecture 4");
+
+        assertNull(lecture1);
+        assertNull(lecture2);
+        assertNull(lecture3);
+        assertNull(lecture4);
     }
 
 }

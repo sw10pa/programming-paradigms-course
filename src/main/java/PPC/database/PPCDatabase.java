@@ -13,6 +13,7 @@ public class PPCDatabase {
         openConnection();
         createDatabase();
         createUsersTable();
+        createLecturesTable();
     }
 
     public Connection getConnection() {
@@ -39,6 +40,14 @@ public class PPCDatabase {
                 " email VARCHAR(30) NOT NULL UNIQUE," +
                 " password VARCHAR(30) NOT NULL," +
                 " status VARCHAR(3) CHECK (status IN ('ADM', 'LEC', 'STU')));");
+    }
+
+    private void createLecturesTable() throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.execute("CREATE TABLE IF NOT EXISTS lectures" +
+                "(lecture_id INT(6) PRIMARY KEY AUTO_INCREMENT," +
+                " lecture_name VARCHAR(30) NOT NULL UNIQUE," +
+                " file_name VARCHAR(35) NOT NULL UNIQUE);");
     }
 
 }
