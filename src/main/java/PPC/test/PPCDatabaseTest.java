@@ -1,8 +1,8 @@
 package PPC.test;
 
 import java.sql.*;
+import PPC.model.*;
 import PPC.database.*;
-import PPC.model.User;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
