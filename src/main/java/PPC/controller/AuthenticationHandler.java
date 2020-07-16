@@ -40,15 +40,21 @@ public class AuthenticationHandler {
 
         ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
-        if (user == null || !user.getPassword().equals(password)) {
-            ret.addObject("error", "Incorrect username or password");
-            ret.addObject("username", username);
-            return ret;
-        }
+        if(illegalCredentials(ret, user, username, password)) return ret;
         ses.setAttribute("user", user);
         resp.sendRedirect("/home");
         return null;
     }
+
+    private boolean illegalCredentials(ModelAndView ret, User user, String username, String password) {
+        if (user == null || !user.getPassword().equals(password)) {
+            ret.addObject("error", "Incorrect username or password");
+            ret.addObject("username", username);
+            return true;
+        }
+        return false;
+    }
+
 
     @RequestMapping("/logout")
     public void logout(HttpServletResponse resp, HttpSession ses) throws IOException {

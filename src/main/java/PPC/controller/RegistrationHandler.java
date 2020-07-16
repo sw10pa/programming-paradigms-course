@@ -35,17 +35,37 @@ public class RegistrationHandler {
                              @RequestParam String lastName,
                              @RequestParam String username,
                              @RequestParam String password) throws IOException, SQLException {
+
         ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
-        if (user != null) {
-            ret.addObject("error", "Username " + username + " is already taken");
-            ret.addObject("username", username);
-            return ret;
-        }
 
-        //carielebze gasasworebelia, aseve duplicatebze
+        //might need to use req.setAttribute
+        if (illegalCredentials(ret, user, firstName, lastName, username, password)) return ret;
+
         dbManager.addUser(new User(firstName, lastName, username, password));
         resp.sendRedirect("/login");
         return null;
+    }
+
+    private boolean illegalCredentials(ModelAndView ret,
+                                       User user,
+                                       String firstName,
+                                       String lastName,
+                                       String username,
+                                       String password) {
+
+        if (firstName.length() == 0 || lastName.length() == 0 ||
+                username.length() == 0 || password.length() == 0) {
+            ret.addObject("error", "Please fill every field");
+            return true;
+        }
+
+        if (user != null) {
+            ret.addObject("error", "Username " + username + " is already taken");
+            ret.addObject("username", username);
+            return true;
+        }
+
+        return false;
     }
 }
