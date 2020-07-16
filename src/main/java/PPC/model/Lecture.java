@@ -1,7 +1,5 @@
 package PPC.model;
 
-import java.io.*;
-
 public class Lecture {
 
     public final static String LECTURE_FILES_PATH = "src/main/webapp/resources/lecture/";
@@ -16,7 +14,7 @@ public class Lecture {
         this.fileName = fileName;
     }
 
-    public Lecture(String lectureName) throws IOException {
+    public Lecture(String lectureName) {
         this.lectureName = lectureName;
         fileName = lectureName + ".txt";
     }
