@@ -5,7 +5,7 @@ import java.sql.*;
 public class PPCDatabase {
 
     private static final String USER = "root";
-    private static final String PASS = "dato1312";
+    private static final String PASS = "Stephane27";
 
     private Connection connection;
 

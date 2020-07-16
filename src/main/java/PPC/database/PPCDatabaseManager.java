@@ -22,13 +22,6 @@ public class PPCDatabaseManager {
         preparedStatement.execute();
     }
 
-    public void removeUserByEmail(String email) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement
-                ("DELETE FROM users WHERE email = ?;");
-        preparedStatement.setString(1, email);
-        preparedStatement.execute();
-    }
-
     public User getUserByEmail(String email) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement
                 ("SELECT * FROM users WHERE email = ?;");
@@ -45,6 +38,21 @@ public class PPCDatabaseManager {
                 resultSet.getString(4),
                 resultSet.getString(5),
                 resultSet.getString(6));
+    }
+
+    public void setUserStatus(String email, String status) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("UPDATE users SET status = ? WHERE email = ?;");
+        preparedStatement.setString(1, status);
+        preparedStatement.setString(2, email);
+        preparedStatement.execute();
+    }
+
+    public void removeUserByEmail(String email) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("DELETE FROM users WHERE email = ?;");
+        preparedStatement.setString(1, email);
+        preparedStatement.execute();
     }
 
 }

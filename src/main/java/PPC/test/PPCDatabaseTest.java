@@ -58,6 +58,20 @@ public class PPCDatabaseTest {
         assertEquals("STU", nadei.getStatus());
         assertEquals("STU", akvin.getStatus());
 
+        dbManager.setUserStatus(sgurg.getEmail(), User.STUDENT);
+        dbManager.setUserStatus(nadei.getEmail(), User.LECTURER);
+        dbManager.setUserStatus(akvin.getEmail(), User.ADMINISTRATOR);
+
+        dchec = dbManager.getUserByEmail("dchec18@freeuni.edu.ge");
+        sgurg = dbManager.getUserByEmail("sgurg18@freeuni.edu.ge");
+        nadei = dbManager.getUserByEmail("nadei18@freeuni.edu.ge");
+        akvin = dbManager.getUserByEmail("akvin18@freeuni.edu.ge");
+
+        assertEquals(User.STUDENT, dchec.getStatus());
+        assertEquals(User.STUDENT, sgurg.getStatus());
+        assertEquals(User.LECTURER, nadei.getStatus());
+        assertEquals(User.ADMINISTRATOR, akvin.getStatus());
+
         dbManager.removeUserByEmail("dchec18@freeuni.edu.ge");
         dbManager.removeUserByEmail("sgurg18@freeuni.edu.ge");
         dbManager.removeUserByEmail("nadei18@freeuni.edu.ge");
