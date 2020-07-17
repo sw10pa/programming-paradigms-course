@@ -2,6 +2,7 @@ package PPC.test;
 
 import java.io.*;
 import java.sql.*;
+import java.util.*;
 import PPC.model.*;
 import PPC.database.*;
 import org.junit.jupiter.api.*;
@@ -17,7 +18,22 @@ public class PPCDatabaseTest {
         dbManager = new PPCDatabaseManager(ppcDatabase.getConnection());
     }
 
-    @Test
+    public void AddLecturesTest() throws SQLException, IOException {
+        for (int i = 1; i <= 27; i++) {
+            dbManager.addLecture(new Lecture("Lecture " + i));
+        }
+
+        ArrayList<Lecture> lectures = dbManager.getAllLectures();
+        assertEquals(27, lectures.size());
+
+        for (int i = 1; i <= lectures.size(); i++) {
+            Lecture lecture = lectures.get(i - 1);
+            assertEquals(i, lecture.getLectureId());
+            assertEquals("Lecture " + i, lecture.getLectureName());
+            assertEquals("Lecture " + i + ".txt", lecture.getFileName());
+        }
+    }
+
     public void UsersTableTest() throws SQLException {
         User dchec = new User("Davit", "Chechelashvili", "dchec18@freeuni.edu.ge", "Davit13");
         User sgurg = new User("Stepane", "Gurgenidze", "sgurg18@freeuni.edu.ge", "Stepane27");
@@ -94,7 +110,6 @@ public class PPCDatabaseTest {
         assertNull(akvin);
     }
 
-    @Test
     public void LecturesTableTest() throws SQLException, IOException {
         Lecture lecture1 = new Lecture("Lecture 1");
         Lecture lecture2 = new Lecture("Lecture 2");

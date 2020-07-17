@@ -2,7 +2,7 @@ package PPC.model;
 
 public class Lecture {
 
-    public final static String LECTURE_FILES_PATH = "src/main/webapp/resources/lecture/";
+    public final static String LECTURES_FILES_PATH = "src/main/webapp/resources/lecture/";
 
     private int lectureId;
     private final String lectureName;

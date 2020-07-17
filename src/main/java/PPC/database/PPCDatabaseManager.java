@@ -2,6 +2,7 @@ package PPC.database;
 
 import java.io.*;
 import java.sql.*;
+import java.util.*;
 import PPC.model.*;
 import PPC.filesystem.*;
 
@@ -62,7 +63,7 @@ public class PPCDatabaseManager {
     /**************************************** LECTURES TABLE ****************************************/
 
     public void addLecture(Lecture lecture) throws SQLException, IOException {
-        FileManager.createFile(Lecture.LECTURE_FILES_PATH, lecture.getFileName());
+        FileManager.createFile(Lecture.LECTURES_FILES_PATH, lecture.getFileName());
         PreparedStatement preparedStatement = connection.prepareStatement
                 ("INSERT INTO lectures (lecture_name, file_name) VALUES (?, ?);");
         preparedStatement.setString(1, lecture.getLectureName());
@@ -71,7 +72,7 @@ public class PPCDatabaseManager {
     }
 
     public void removeLectureByName(String lectureName) throws SQLException {
-        FileManager.deleteFile(Lecture.LECTURE_FILES_PATH, lectureName + ".txt");
+        FileManager.deleteFile(Lecture.LECTURES_FILES_PATH, lectureName + ".txt");
         PreparedStatement preparedStatement = connection.prepareStatement
                 ("DELETE FROM lectures WHERE lecture_name = ?;");
         preparedStatement.setString(1, lectureName);
@@ -85,6 +86,17 @@ public class PPCDatabaseManager {
         ResultSet resultSet = preparedStatement.executeQuery();
         if (!resultSet.next()) return null;
         return buildLecture(resultSet);
+    }
+
+    public ArrayList<Lecture> getAllLectures() throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("SELECT * FROM lectures;");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Lecture> lectures = new ArrayList<>();
+        while (resultSet.next()) {
+            lectures.add(buildLecture(resultSet));
+        }
+        return lectures;
     }
 
     private Lecture buildLecture(ResultSet resultSet) throws SQLException {
