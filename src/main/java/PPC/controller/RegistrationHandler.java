@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,32 +28,33 @@ public class RegistrationHandler {
 
 
     @GetMapping("/signup")
-    public String get() {
-        return "log-in";
+    public void get(HttpServletResponse resp, HttpSession ses) throws IOException {
+        ses.setAttribute("type", "registration");
+        resp.sendRedirect("/");
     }
 
     @PostMapping("/signup")
-    public ModelAndView post(HttpServletRequest req,
+    public void post(HttpServletRequest req,
                              HttpServletResponse resp,
                              @RequestParam String firstName,
                              @RequestParam String lastName,
                              @RequestParam String username,
                              @RequestParam String password) throws IOException, SQLException {
 
-        ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
 
-        if (illegalCredentials(ret, user, firstName, lastName, username, password)) return ret;
-
         HttpSession ses = req.getSession();
-        ses.setAttribute("success", "Registration completed successfully");
+        if (illegalCredentials(ses, user, firstName, lastName, username, password)) {
+            ses.setAttribute("type", "registration");
+        }else{
+            ses.setAttribute("success", "Registration completed successfully");
+            dbManager.addUser(new User(firstName, lastName, username, password));
+        }
 
-        dbManager.addUser(new User(firstName, lastName, username, password));
         resp.sendRedirect("/");
-        return null;
     }
 
-    private boolean illegalCredentials(ModelAndView ret,
+    private boolean illegalCredentials(HttpSession ses,
                                        User user,
                                        String firstName,
                                        String lastName,
@@ -61,13 +63,12 @@ public class RegistrationHandler {
 
         if (firstName.length() == 0 || lastName.length() == 0 ||
                 username.length() == 0 || password.length() == 0) {
-            ret.addObject("error", "Please fill every field");
+            ses.setAttribute("error", "Please fill every field");
             return true;
         }
 
         if (user != null) {
-            ret.addObject("error", "Username " + username + " is already taken");
-            ret.addObject("username", username);
+            ses.setAttribute("error", "Username is already taken");
             return true;
         }
 

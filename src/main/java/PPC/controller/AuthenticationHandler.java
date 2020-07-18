@@ -26,9 +26,31 @@ public class AuthenticationHandler {
         dbManager = new PPCDatabaseManager(ppcDatabase.getConnection());
     }
 
-    @GetMapping(value = {"/", "/login"})
+    @GetMapping("/login")
+    public void login(HttpServletResponse resp) throws IOException {
+        resp.sendRedirect("/");
+    }
+
+    @GetMapping(value = "/")
     public ModelAndView login(HttpSession ses) {
-        return new ModelAndView("log-in");
+        ModelAndView ret = new ModelAndView("log-in");
+
+        if(ses.getAttribute("error") != null){
+            ret.addObject("error", ses.getAttribute("error"));
+            ses.removeAttribute("error");
+        }
+
+        if(ses.getAttribute("success") != null) {
+            ret.addObject("success", ses.getAttribute("success"));
+            ses.removeAttribute("success");
+        }
+
+        if(ses.getAttribute("type") != null){
+            ret.addObject("type", ses.getAttribute("type"));
+            ses.removeAttribute("type");
+        }
+
+        return ret;
     }
 
     @PostMapping(value = {"/", "/login"})
@@ -37,7 +59,6 @@ public class AuthenticationHandler {
                               HttpSession ses,
                               @RequestParam String username,
                               @RequestParam String password) throws IOException, SQLException {
-        if(ses.getAttribute("success") != null) ses.removeAttribute("success");
         ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
         if(illegalCredentials(ret, user, username, password)) return ret;
@@ -49,7 +70,6 @@ public class AuthenticationHandler {
     private boolean illegalCredentials(ModelAndView ret, User user, String username, String password) {
         if (user == null || !user.getPassword().equals(password)) {
             ret.addObject("error", "Incorrect username or password");
-            ret.addObject("username", username);
             return true;
         }
         return false;
