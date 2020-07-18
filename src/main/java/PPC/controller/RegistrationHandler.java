@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -41,13 +42,14 @@ public class RegistrationHandler {
         ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
 
-        //might need to use req.setAttribute
         if (illegalCredentials(ret, user, firstName, lastName, username, password)) return ret;
-        ret.addObject("success", "Registration completed successfully");
+
+        HttpSession ses = req.getSession();
+        ses.setAttribute("success", "Registration completed successfully");
 
         dbManager.addUser(new User(firstName, lastName, username, password));
-        resp.sendRedirect("/login");
-        return ret;
+        resp.sendRedirect("/");
+        return null;
     }
 
     private boolean illegalCredentials(ModelAndView ret,

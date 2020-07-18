@@ -27,7 +27,7 @@ public class AuthenticationHandler {
     }
 
     @GetMapping(value = {"/", "/login"})
-    public ModelAndView login() {
+    public ModelAndView login(HttpSession ses) {
         return new ModelAndView("log-in");
     }
 
@@ -37,7 +37,7 @@ public class AuthenticationHandler {
                               HttpSession ses,
                               @RequestParam String username,
                               @RequestParam String password) throws IOException, SQLException {
-
+        if(ses.getAttribute("success") != null) ses.removeAttribute("success");
         ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
         if(illegalCredentials(ret, user, username, password)) return ret;
