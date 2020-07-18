@@ -18,13 +18,14 @@ public class PPCDatabaseTest {
         dbManager = new PPCDatabaseManager(ppcDatabase.getConnection());
     }
 
+    @Test
     public void AddLecturesTest() throws SQLException, IOException {
-        for (int i = 1; i <= 27; i++) {
+        for (int i = 1; i <= 32; i++) {
             dbManager.addLecture(new Lecture("Lecture " + i));
         }
 
         ArrayList<Lecture> lectures = dbManager.getAllLectures();
-        assertEquals(27, lectures.size());
+        assertEquals(32, lectures.size());
 
         for (int i = 1; i <= lectures.size(); i++) {
             Lecture lecture = lectures.get(i - 1);
