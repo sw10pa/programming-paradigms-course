@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -30,7 +31,8 @@ public class RegistrationHandler {
     }
 
     @PostMapping("/signup")
-    public ModelAndView post(HttpServletResponse resp,
+    public ModelAndView post(HttpServletRequest req,
+                             HttpServletResponse resp,
                              @RequestParam String firstName,
                              @RequestParam String lastName,
                              @RequestParam String username,
@@ -41,10 +43,11 @@ public class RegistrationHandler {
 
         //might need to use req.setAttribute
         if (illegalCredentials(ret, user, firstName, lastName, username, password)) return ret;
+        ret.addObject("success", "Registration completed successfully");
 
         dbManager.addUser(new User(firstName, lastName, username, password));
         resp.sendRedirect("/login");
-        return null;
+        return ret;
     }
 
     private boolean illegalCredentials(ModelAndView ret,
