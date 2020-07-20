@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+}
+
+.body {
+    background: rgba(78, 12, 65, 0.97);
+}
+
+.info {
+    margin-top: 2%;
+    height: 10%;
+    margin-left: 6%;
+    margin-right: 1%;
+}
+
+.info:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.logo {
+    float:left;
+    width:10%;
+    height:100%;
+    margin-right: 1%;
+}
+
+.icon{
+    position: relative;
+    height:143.7%;
+}
+
+.course-name {
+    background-color: #aaa;
+    float: left;
+    padding: 1%;
+    width: 61%;
+    margin-right: 3%;
+    margin-top:1%;
+}
+
+.log-out {
+    background-color: #bbb;
+    float: left;
+    padding: 1%;
+    width: 25%;
+    margin-top:1%;
+
+}
+
+.main {
+    margin-left: 6%;
+    margin-top: 3%;
+    margin-right: 1%;
+    height: 80%;
+}
+
+.lectures {
+    height: 100%;
+    overflow-y: auto;
+    background-color: #ccc;
+    float: left;
+    padding:2%;
+    width: 72%;
+    margin-right: 3%;
+}
+
+.leader-board {
+    background-color: #ccc;
+    float: left;
+    padding: 1%;
+    width: 25%;
+}
+
+.lecture {
+    background-color: #06a51b;
+    margin-top: 1.7%;
+    margin-left: 2.2%;
+    margin-right: 0.98%;
+    height: 23.9%;
+    padding-left: 4.68%;
+    display: table;
+    width: 96.82%;
+    font-size: 199%;
+}
+
+.lectureName {
+    display: table-cell;
+    vertical-align: middle;
+}

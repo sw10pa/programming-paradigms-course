@@ -21,10 +21,7 @@ public class UserpageHandler {
 
     @GetMapping("/home")
     public ModelAndView home(HttpSession ses) {
-        User user = (User) ses.getAttribute("user");
-        if(user.getStatus().equals(User.STUDENT))
-            return new ModelAndView("student-page");
-        return new ModelAndView("lecturer-page");
+        return new ModelAndView("user-page");
     }
 
 }
