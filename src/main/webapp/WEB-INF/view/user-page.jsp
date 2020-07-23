@@ -1,9 +1,9 @@
 <%@ page import="PPC.database.PPCDatabase" %>
 <%@ page import="PPC.database.PPCDatabaseManager" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="PPC.model.Lecture" %><%--
+<%@ page import="PPC.model.Lecture" %>
+<%@ page import="PPC.model.User" %>
+<%--
   Created by IntelliJ IDEA.
   User: Niko
   Date: 7/20/2020
@@ -15,39 +15,60 @@
 <head>
     <link href="/resources/style/css/userPageStyle.css" type="text/css" rel="stylesheet">
     <link href="/resources/image/logo.png" rel="shortcut icon" type="image/x-icon">
+
 </head>
 <body class="body">
 <div class="info">
     <div class="logo">
         <nav>
-            <a href="https://scontent.ftbs5-2.fna.fbcdn.net/v/t1.0-9/p960x960/69456674_2911355902224141_400024213043281920_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=a6GcwyPnicUAX_PIeNP&_nc_ht=scontent.ftbs5-2.fna&_nc_tp=6&oh=58786c76bc25c47acdc4733fd28333a4&oe=5F38A6A0">
-                <img class = "icon" src="/resources/image/logo.png" /></a>
+            <a href=""> <img class = "icon" src="/resources/image/logo.png" /></a>
         </nav>
     </div>
 
     <div class="course-name">
-        paradigms
+        <nav>
+            <img class = "course-name-text" src="/resources/image/v2.png"/>
+        </nav>
     </div>
     <div class="log-out">
-        logout
+        <form>
+        <button type= "submit" class = "log-out-button">
+            <span>
+                <%
+                    User user = (User) request.getSession().getAttribute("user");
+                    String firstName = user.getFirstName();
+                    String lastName = user.getLastName();
+                    out.write(firstName + " " + lastName);
+                %>
+            </span>
+        </button>
     </div>
 </div>
 
 <div class="main">
     <div class="lectures">
         <%
-            PPCDatabase db = null;
-            db = new PPCDatabase();
+            PPCDatabase db = new PPCDatabase();
             PPCDatabaseManager dbManager = new PPCDatabaseManager(db.getConnection());
             ArrayList<Lecture> lectures = dbManager.getAllLectures();
             for (Lecture lec : lectures) {
-                out.write("<a href = \"https://scontent.ftbs5-2.fna.fbcdn.net/v/t1.0-9/p960x960/69456674_2911355902224141_400024213043281920_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=a6GcwyPnicUAX_PIeNP&_nc_ht=scontent.ftbs5-2.fna&_nc_tp=6&oh=58786c76bc25c47acdc4733fd28333a4&oe=5F38A6A0\"> <div class = \"lecture\"> " +
+                out.write("<a href = \"https://facebook.com\"> <div class = \"lecture\"> " +
                         "<div class = \"lectureName\">" + lec.getLectureName() + "</div> </div> </a>");
             }
         %>
     </div>
     <div class="leader-board">
-        leaderboard
+        <div class = "header"> Leader Board </div>
+        <main class="profiles">
+        <%
+            for (Lecture lec : lectures) {
+                out.write("<article class=\"profile\">\n" +
+                        "<span class=\"name\">" + lec.getLectureName() + "</span>\n" +
+                        "<span class=\"value\">2.1</span>\n" +
+                        "</article>");
+            }
+        %>
+        </main>
     </div>
 </div>
 </body>
