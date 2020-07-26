@@ -116,4 +116,8 @@ public class PPCDatabaseManager {
                 resultSet.getString(3));
     }
 
+    public int getUserScore(String email) {
+        return 0;
+    }
+
 }
