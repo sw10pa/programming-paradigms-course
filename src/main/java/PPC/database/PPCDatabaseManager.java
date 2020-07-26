@@ -43,6 +43,17 @@ public class PPCDatabaseManager {
         return buildUser(resultSet);
     }
 
+    public ArrayList<User> getAllUsers() throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("SELECT * FROM users;");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<User> users = new ArrayList<>();
+        while (resultSet.next()) {
+            users.add(buildUser(resultSet));
+        }
+        return users;
+    }
+
     private User buildUser(ResultSet resultSet) throws SQLException {
         return new User(resultSet.getInt(1),
                 resultSet.getString(2),
