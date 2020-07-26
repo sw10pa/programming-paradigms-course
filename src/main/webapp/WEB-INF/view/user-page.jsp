@@ -1,8 +1,8 @@
 <%@ page import="PPC.database.PPCDatabase" %>
 <%@ page import="PPC.database.PPCDatabaseManager" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="PPC.model.Lecture" %>
 <%@ page import="PPC.model.User" %>
+<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: Niko
@@ -21,27 +21,28 @@
 <div class="info">
     <div class="logo">
         <nav>
-            <a href=""> <img class = "icon" src="/resources/image/logo.png" /></a>
+            <a href=""> <img class="icon" src="/resources/image/logo.png"/></a>
         </nav>
     </div>
 
     <div class="course-name">
         <nav>
-            <img class = "course-name-text" src="/resources/image/v2.png"/>
+            <img class="course-name-text" src="/resources/image/v2.png"/>
         </nav>
     </div>
     <div class="log-out">
-        <form>
-        <button type= "submit" class = "log-out-button">
+        <form action="/logout">
+            <button type="submit" class="log-out-button">
             <span>
                 <%
-                    User user = (User) request.getSession().getAttribute("user");
-                    String firstName = user.getFirstName();
-                    String lastName = user.getLastName();
+                    User currUser = (User) request.getSession().getAttribute("user");
+                    String firstName = currUser.getFirstName();
+                    String lastName = currUser.getLastName();
                     out.write(firstName + " " + lastName);
                 %>
             </span>
-        </button>
+            </button>
+        </form>
     </div>
 </div>
 
@@ -52,22 +53,27 @@
             PPCDatabaseManager dbManager = new PPCDatabaseManager(db.getConnection());
             ArrayList<Lecture> lectures = dbManager.getAllLectures();
             for (Lecture lec : lectures) {
-                out.write("<a href = \"https://facebook.com\"> <div class = \"lecture\"> " +
+                out.write("<a href = \"/lecture?lectureId=" + lec.getLectureId() + "\"> <div class = \"lecture\"> " +
                         "<div class = \"lectureName\">" + lec.getLectureName() + "</div> </div> </a>");
             }
         %>
     </div>
     <div class="leader-board">
-        <div class = "header"> Leader Board </div>
+        <div class="header"> Leader Board</div>
         <main class="profiles">
-        <%
-            for (Lecture lec : lectures) {
-                out.write("<article class=\"profile\">\n" +
-                        "<span class=\"name\">" + lec.getLectureName() + "</span>\n" +
-                        "<span class=\"value\">2.1</span>\n" +
-                        "</article>");
-            }
-        %>
+            <%
+                ArrayList<User> users = dbManager.getAllUsers();
+                for (User user : users) {
+                    if (user.getStatus().equals(User.STUDENT)) {
+                        out.write("<article class=\"profile\">\n" +
+                                "<span class=\"name\">" +
+                                user.getFirstName() + " " + user.getLastName() +
+                                "</span>\n<span class=\"value\">" +
+                                dbManager.getUserScore(user.getEmail()) +
+                                "</span>\n</article>");
+                    }
+                }
+            %>
         </main>
     </div>
 </div>

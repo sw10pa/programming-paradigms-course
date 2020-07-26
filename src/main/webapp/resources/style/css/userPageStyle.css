@@ -21,15 +21,15 @@
 }
 
 .logo {
-    float:left;
-    width:10%;
-    height:100%;
+    float: left;
+    width: 10%;
+    height: 100%;
     margin-right: 1%;
 }
 
-.icon{
+.icon {
     position: relative;
-    height:143.7%;
+    height: 143.7%;
 }
 
 .course-name {
@@ -39,10 +39,10 @@
     margin-right: 3%;
 }
 
-.course-name-text{
-    width:100%;
+.course-name-text {
+    width: 100%;
     position: relative;
-    height:143.7%;
+    height: 143.7%;
 }
 
 .log-out {
@@ -52,28 +52,28 @@
     margin-top: 0.7%;
 }
 
-.log-out-button{
-    background-color:whitesmoke;
+.log-out-button {
+    background-color: whitesmoke;
     border-radius: 25px 25px 25px 25px;
     -moz-border-radius: 25px 25px 25px 25px;
     -webkit-border-radius: 25px 25px 25px 25px;
-    border:3px solid transparent;
-    display:inline-block;
-    cursor:pointer;
-    color:#610061;
-    font-family:Arial;
+    border: 3px solid transparent;
+    display: inline-block;
+    cursor: pointer;
+    color: #610061;
+    font-family: Arial;
     font-size: 120%;
-    font-weight:bold;
-    padding:2%;
-    text-decoration:none;
+    font-weight: bold;
+    padding: 2%;
+    text-decoration: none;
     width: 100%;
 }
 
 button:hover span {
-    display:none;
+    display: none;
 }
 
-.log-out-button:hover{
+.log-out-button:hover {
     transform: scale(1.1);
 }
 
@@ -92,12 +92,12 @@ button:hover span {
     height: 100%;
     overflow-y: auto;
     float: left;
-    padding:0% 3% 2% 2%;
+    padding: 0% 3% 2% 2%;
     width: 72%;
     margin-right: 3%;
 }
 
-.lectures a{
+.lectures a {
     text-decoration: none;
 }
 
@@ -116,7 +116,7 @@ button:hover span {
     -webkit-border-radius: 25px 25px 25px 25px;
 }
 
-.lectures a:hover .lecture{
+.lectures a:hover .lecture {
     padding: 2% 2% 2% 2%;
     transform: scale(1.1);
 }
@@ -133,10 +133,10 @@ button:hover span {
     float: left;
     width: 25%;
     border-radius: 25px;
-    height:100%;
+    height: 100%;
 }
 
-.header{
+.header {
     font-family: "Courier New";
     font-style: italic;
     font-weight: bold;
@@ -145,7 +145,7 @@ button:hover span {
     text-shadow: 12px 12px 12px #a3a3c2, 0 0 25px #a3a3c2, 5px 5px 5px #a3a3c2;
 }
 
-.profiles{
+.profiles {
     overflow-y: auto;
     display: grid;
     row-gap: 0.4%;
@@ -154,7 +154,7 @@ button:hover span {
     padding: 3% 5% 5% 5%;
 }
 
-.profile{
+.profile {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     align-items: center;
@@ -162,16 +162,15 @@ button:hover span {
     backdrop-filter: blur(3px);
     border-radius: 15px;
     box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
-    cursor: pointer;
-    transition: transform .25s cubic-bezier(.7,.98,.86,.98), box-shadow .25s cubic-bezier(.7,.98,.86,.98);
+    transition: transform .25s cubic-bezier(.7, .98, .86, .98), box-shadow .25s cubic-bezier(.7, .98, .86, .98);
 }
 
-.profile:hover{
+.profile:hover {
     transform: scale(1.1);
     box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
 }
 
-.name{
+.name {
     color: #979cb0;
     font-weight: 600;
     font-size: 20px;
@@ -179,7 +178,7 @@ button:hover span {
     margin-left: 12px;
 }
 
-.value{
+.value {
     color: rebeccapurple;
     font-weight: 700;
     font-size: 34px;

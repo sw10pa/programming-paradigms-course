@@ -35,17 +35,17 @@ public class AuthenticationHandler {
     public ModelAndView login(HttpSession ses) {
         ModelAndView ret = new ModelAndView("log-in");
 
-        if(ses.getAttribute("error") != null){
+        if (ses.getAttribute("error") != null) {
             ret.addObject("error", ses.getAttribute("error"));
             ses.removeAttribute("error");
         }
 
-        if(ses.getAttribute("success") != null) {
+        if (ses.getAttribute("success") != null) {
             ret.addObject("success", ses.getAttribute("success"));
             ses.removeAttribute("success");
         }
 
-        if(ses.getAttribute("type") != null){
+        if (ses.getAttribute("type") != null) {
             ret.addObject("type", ses.getAttribute("type"));
             ses.removeAttribute("type");
         }
@@ -61,7 +61,7 @@ public class AuthenticationHandler {
                               @RequestParam String password) throws IOException, SQLException {
         ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
-        if(illegalCredentials(ret, user, username, password)) return ret;
+        if (illegalCredentials(ret, user, username, password)) return ret;
         ses.setAttribute("user", user);
         resp.sendRedirect("/home");
         return null;
@@ -75,10 +75,9 @@ public class AuthenticationHandler {
         return false;
     }
 
-
     @RequestMapping("/logout")
     public void logout(HttpServletResponse resp, HttpSession ses) throws IOException {
         ses.invalidate();
-        resp.sendRedirect("/log-in");
+        resp.sendRedirect("/");
     }
 }
