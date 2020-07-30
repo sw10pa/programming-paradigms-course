@@ -5,7 +5,7 @@ import java.sql.*;
 public class PPCDatabase {
 
     private static final String USER = "root";
-    private static final String PASS = "dato1312";
+    private static final String PASS = "Stephane27";
 
     private Connection connection;
 
@@ -47,7 +47,8 @@ public class PPCDatabase {
         statement.execute("CREATE TABLE IF NOT EXISTS lectures" +
                 "(lecture_id INT(6) PRIMARY KEY AUTO_INCREMENT," +
                 " lecture_name VARCHAR(30) NOT NULL UNIQUE," +
-                " file_name VARCHAR(35) NOT NULL UNIQUE);");
+                " file_name VARCHAR(35) NOT NULL UNIQUE," +
+                " video_url VARCHAR(128) DEFAULT NULL);");
     }
 
 }

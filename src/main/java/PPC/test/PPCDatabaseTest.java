@@ -24,6 +24,34 @@ public class PPCDatabaseTest {
             dbManager.addLecture(new Lecture("Lecture " + i));
         }
 
+        dbManager.setLectureVideoUrl(1, "https://youtu.be/Ps8jOj7diA0");
+        dbManager.setLectureVideoUrl(2, "https://youtu.be/jTSvthW34GU");
+        dbManager.setLectureVideoUrl(3, "https://youtu.be/H4MQXBF6FN4");
+        dbManager.setLectureVideoUrl(4, "https://youtu.be/_eR4rxnM7Lc");
+        dbManager.setLectureVideoUrl(5, "https://youtu.be/73Z7gaAvovQ");
+        dbManager.setLectureVideoUrl(6, "https://youtu.be/iyLNYXcEtWE");
+        dbManager.setLectureVideoUrl(7, "https://youtu.be/Yr1YnOVG-4g");
+        dbManager.setLectureVideoUrl(8, "https://youtu.be/1nYDflSL0Mg");
+        dbManager.setLectureVideoUrl(9, "https://youtu.be/arjo2-JQeaY");
+        dbManager.setLectureVideoUrl(10, "https://youtu.be/FvpxXmEG1F8");
+        dbManager.setLectureVideoUrl(11, "https://youtu.be/DwTXMjVkIUY");
+        dbManager.setLectureVideoUrl(12, "https://youtu.be/0rXjvLa2NSs");
+        dbManager.setLectureVideoUrl(13, "https://youtu.be/ucQI5HpiFrI");
+        dbManager.setLectureVideoUrl(14, "https://youtu.be/TRfbJIsDBIM");
+        dbManager.setLectureVideoUrl(15, "https://youtu.be/omE3YYpHhLo");
+        dbManager.setLectureVideoUrl(16, "https://youtu.be/OGHN_zVTMMo");
+        dbManager.setLectureVideoUrl(17, "https://youtu.be/kF3eSQTFagQ");
+        dbManager.setLectureVideoUrl(18, "https://youtu.be/ynwh5O3jVRM");
+        dbManager.setLectureVideoUrl(19, "https://youtu.be/_cV8NWQCxnE");
+        dbManager.setLectureVideoUrl(20, "https://youtu.be/onKR7ICXacQ");
+        dbManager.setLectureVideoUrl(21, "https://youtu.be/omzSd3En5g4");
+        dbManager.setLectureVideoUrl(22, "https://youtu.be/3LeCydausnk");
+        dbManager.setLectureVideoUrl(23, "https://youtu.be/TJkH1CSHg44");
+        dbManager.setLectureVideoUrl(24, "https://youtu.be/_9XAlLofYwU");
+        dbManager.setLectureVideoUrl(25, "https://youtu.be/V-5DCBQdErM");
+        dbManager.setLectureVideoUrl(26, "https://youtu.be/PrnRTwCaWz8");
+        dbManager.setLectureVideoUrl(27, "https://youtu.be/cXY4fSA7DnM");
+
         ArrayList<Lecture> lectures = dbManager.getAllLectures();
         assertEquals(32, lectures.size());
 

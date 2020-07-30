@@ -90,6 +90,15 @@ public class PPCDatabaseManager {
         preparedStatement.execute();
     }
 
+    public Lecture getLectureById(int lectureId) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("SELECT * FROM lectures WHERE lecture_id = ?;");
+        preparedStatement.setInt(1, lectureId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (!resultSet.next()) return null;
+        return buildLecture(resultSet);
+    }
+
     public Lecture getLectureByName(String lectureName) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement
                 ("SELECT * FROM lectures WHERE lecture_name = ?;");
@@ -113,7 +122,16 @@ public class PPCDatabaseManager {
     private Lecture buildLecture(ResultSet resultSet) throws SQLException {
         return new Lecture(resultSet.getInt(1),
                 resultSet.getString(2),
-                resultSet.getString(3));
+                resultSet.getString(3),
+                resultSet.getString(4));
+    }
+
+    public void setLectureVideoUrl(int lectureId, String videoUrl) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("UPDATE lectures SET video_url = ? WHERE lecture_id = ?;");
+        preparedStatement.setString(1, videoUrl);
+        preparedStatement.setInt(2, lectureId);
+        preparedStatement.execute();
     }
 
     public int getUserScore(String email) {
