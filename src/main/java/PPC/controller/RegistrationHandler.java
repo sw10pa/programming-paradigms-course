@@ -48,7 +48,6 @@ public class RegistrationHandler {
             ses.setAttribute("success", "Registration completed successfully");
             dbManager.addUser(new User(firstName, lastName, username, password));
         }
-
         resp.sendRedirect("/");
     }
 
