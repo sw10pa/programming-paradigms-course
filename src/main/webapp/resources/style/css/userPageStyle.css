@@ -4,7 +4,6 @@
 
 .body {
     background-image: url("https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX24284312.jpg?fbclid=IwAR0OLi8k1Bs5ErCtG2FL-1NVE41-j-b_3dL8lO3WEMqMswFe1Ekv2-3pm3A");
-
 }
 
 .info {
@@ -121,7 +120,7 @@ button:hover span {
     transform: scale(1.1);
 }
 
-.lectureName {
+.lecture-name {
     display: table-cell;
     vertical-align: middle;
     color: rebeccapurple;
@@ -133,7 +132,6 @@ button:hover span {
     float: left;
     width: 25%;
     border-radius: 25px;
-    height: 100%;
 }
 
 .header {
@@ -149,7 +147,6 @@ button:hover span {
     overflow-y: auto;
     display: grid;
     row-gap: 0.4%;
-    height: 100%;
     border-radius: 0 0 12px 12px;
     padding: 3% 5% 5% 5%;
 }

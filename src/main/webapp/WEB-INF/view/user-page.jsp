@@ -54,7 +54,7 @@
             ArrayList<Lecture> lectures = dbManager.getAllLectures();
             for (Lecture lec : lectures) {
                 out.write("<a href = \"/lecture?lectureId=" + lec.getLectureId() + "\"> <div class = \"lecture\"> " +
-                        "<div class = \"lectureName\">" + lec.getLectureName() + "</div> </div> </a>");
+                        "<div class = \"lecture-name\">" + lec.getLectureName() + "</div> </div> </a>");
             }
         %>
     </div>
