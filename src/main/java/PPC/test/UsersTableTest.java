@@ -76,21 +76,6 @@ public class UsersTableTest {
         assertEquals(User.STUDENT, sgurg.getStatus());
         assertEquals(User.LECTURER, nadei.getStatus());
         assertEquals(User.ADMINISTRATOR, akvin.getStatus());
-
-        dbManager.removeUserByEmail("dchec18@freeuni.edu.ge");
-        dbManager.removeUserByEmail("sgurg18@freeuni.edu.ge");
-        dbManager.removeUserByEmail("nadei18@freeuni.edu.ge");
-        dbManager.removeUserByEmail("akvin18@freeuni.edu.ge");
-
-        dchec = dbManager.getUserByEmail("dchec18@freeuni.edu.ge");
-        sgurg = dbManager.getUserByEmail("sgurg18@freeuni.edu.ge");
-        nadei = dbManager.getUserByEmail("nadei18@freeuni.edu.ge");
-        akvin = dbManager.getUserByEmail("akvin18@freeuni.edu.ge");
-
-        assertNull(dchec);
-        assertNull(sgurg);
-        assertNull(nadei);
-        assertNull(akvin);
     }
 
 }
