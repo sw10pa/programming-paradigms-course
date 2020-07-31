@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class QuizHandler {
@@ -26,31 +31,81 @@ public class QuizHandler {
     }
 
     @GetMapping("/quiz")
-    public ModelAndView get(HttpServletRequest req, HttpSession ses, @RequestParam String lectureId) throws FileNotFoundException, SQLException {
+    public ModelAndView get(HttpServletResponse resp, HttpServletRequest req, HttpSession ses) throws IOException, SQLException {
+        if (ses.getAttribute("user") == null) resp.sendRedirect("/logout");
+        String lectureId = (String) req.getAttribute("lectureId");
 
-        int index = 0;
         ArrayList<Question> questions = dbManager.getQuestionsByLectureId(Integer.parseInt(lectureId));
-        Question question = questions.get(index);
+        initializeQuiz(ses, questions);
+        Question question = questions.get(0);
         ModelAndView ret = new ModelAndView("question-" + question.getQuestionType());
 
         ret.addObject("question", question);
-        ses.setAttribute("questionCount", index + 1);
-        ses.setAttribute("questions", questions);
+
         return ret;
     }
 
+    private void initializeQuiz(HttpSession ses, ArrayList<Question> questions) {
+        ses.setAttribute("currQuestionIndex", 0);
+        ses.setAttribute("questions", questions);
+
+        List<String> correctAnswers = new ArrayList<>();
+        List<String> userAnswers = new ArrayList<>();
+
+        for (Question question : questions) {
+            String correctAnswer = question.getQuestionStructure().get(question.getRightAnswerIndex());
+            correctAnswers.add(correctAnswer);
+        }
+
+        ses.setAttribute("correctAnswers", correctAnswers);
+        ses.setAttribute("userAnswers", userAnswers);
+        ses.setAttribute("correctAnswerCount", 0);
+    }
+
     @PostMapping("/quiz")
-    public ModelAndView post(HttpSession ses) {
+    public ModelAndView post(HttpSession ses, HttpServletResponse resp, @RequestParam String answer) throws IOException {
+        if (ses.getAttribute("user") == null) resp.sendRedirect("/logout");
+
+        ArrayList<Question> questions = (ArrayList<Question>) ses.getAttribute("questions");
+        int index = (int) ses.getAttribute("currQuestionIndex");
+
+        List<String> userAnswers = (List<String>) ses.getAttribute("userAnswers");
+        userAnswers.add(answer);
+        checkAnswer(ses, index, questions, answer);
 
         //move on to next question
-        int index = (int) ses.getAttribute("questionCount");
-        ArrayList<Question> questions = (ArrayList<Question>) ses.getAttribute("questions");
+        index++;
+        if (index == questions.size()) return endQuiz(ses);
+        Question newQuestion = questions.get(index);
+        ModelAndView ret = new ModelAndView("question-" + newQuestion.getQuestionType());
+        ret.addObject("question", newQuestion);
+        ses.setAttribute("currQuestionIndex", index);
+        return ret;
+    }
 
+    private void checkAnswer(HttpSession ses, int index, ArrayList<Question> questions, String answer) {
         Question question = questions.get(index);
-        ModelAndView ret = new ModelAndView("question-" + question.getQuestionType());
+        String correctAnswer = question.getQuestionStructure().get(question.getRightAnswerIndex());
+        if (correctAnswer.equals(answer))
+            ses.setAttribute("correctAnswerCount", (int) ses.getAttribute("correctAnswerCount") + 1);
+    }
 
-        ret.addObject("question", question);
-        ses.setAttribute("questionCount", index + 1);
+    private ModelAndView endQuiz(HttpSession ses) {
+        ModelAndView ret = new ModelAndView("quiz-result");
+
+        List<String> userAnswers = (List<String>) ses.getAttribute("userAnswers");
+        ret.addObject("userAnswers", userAnswers);
+        ses.removeAttribute("userAnswers");
+
+        List<String> correctAnswers = (List<String>) ses.getAttribute("correctAnswers");
+        ret.addObject("correctAnswers", correctAnswers);
+        ses.removeAttribute("userAnswers");
+
+        int correctAnswerCount = (int) ses.getAttribute("correctAnswerCount");
+        ret.addObject("correctAnswerCount", correctAnswerCount);
+        ses.removeAttribute("correctAnswerCount");
+
+        ses.removeAttribute("currQuestionIndex");
         return ret;
     }
 
