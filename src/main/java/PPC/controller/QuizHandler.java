@@ -31,9 +31,9 @@ public class QuizHandler {
     }
 
     @GetMapping("/quiz")
-    public ModelAndView get(HttpServletResponse resp, HttpServletRequest req, HttpSession ses) throws IOException, SQLException {
+    public ModelAndView get(HttpServletResponse resp, HttpServletRequest req,
+                            HttpSession ses, @RequestParam String lectureId) throws IOException, SQLException {
         if (ses.getAttribute("user") == null) resp.sendRedirect("/logout");
-        String lectureId = (String) req.getAttribute("lectureId");
 
         ArrayList<Question> questions = dbManager.getQuestionsByLectureId(Integer.parseInt(lectureId));
         initializeQuiz(ses, questions);
