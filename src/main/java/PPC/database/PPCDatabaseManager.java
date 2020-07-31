@@ -134,6 +134,52 @@ public class PPCDatabaseManager {
         preparedStatement.execute();
     }
 
+    /**************************************** QUESTIONS TABLE ****************************************/
+
+    public void addQuestion(Question question) throws SQLException, IOException {
+        String fileName = getQuestionsCount() + 1 + ".txt";
+        FileManager.createFile(Question.QUESTIONS_FILES_PATH, fileName);
+        FileManager.writeQuestionToFile(Question.QUESTIONS_FILES_PATH, fileName, question.getRightAnswerIndex(), question.getQuestionStructure());
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("INSERT INTO questions (lecture_id, file_name, question_type) VALUES (?, ?, ?);");
+        preparedStatement.setInt(1, question.getLectureId());
+        preparedStatement.setString(2, fileName);
+        preparedStatement.setString(3, question.getQuestionType());
+        preparedStatement.execute();
+    }
+
+    private int getQuestionsCount() throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("SELECT COUNT(*) FROM questions;");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
+    }
+
+    public ArrayList<Question> getQuestionsByLectureId(int lectureId) throws SQLException, FileNotFoundException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("SELECT * FROM questions WHERE lecture_id = ?;");
+        preparedStatement.setInt(1, lectureId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Question> questions = new ArrayList<>();
+        while (resultSet.next()) {
+            questions.add(buildQuestion(resultSet));
+        }
+        return questions;
+    }
+
+    private Question buildQuestion(ResultSet resultSet) throws SQLException, FileNotFoundException {
+        int questionId = resultSet.getInt(1);
+        int lectureId = resultSet.getInt(2);
+        String fileName = resultSet.getString(3);
+        String questionType = resultSet.getString(4);
+        int rightAnswerIndex = FileManager.readRightAnswerIndex(Question.QUESTIONS_FILES_PATH, fileName);
+        ArrayList<String> questionStructure = FileManager.readQuestionStructure(Question.QUESTIONS_FILES_PATH, fileName);
+        return new Question(questionId, lectureId, fileName, questionType, rightAnswerIndex, questionStructure);
+    }
+
+    /**************************************** RECORDS TABLE ****************************************/
+
     public int getUserScore(String email) {
         return 0;
     }

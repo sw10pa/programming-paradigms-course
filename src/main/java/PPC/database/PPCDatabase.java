@@ -14,6 +14,7 @@ public class PPCDatabase {
         createDatabase();
         createUsersTable();
         createLecturesTable();
+        createQuestionsTable();
     }
 
     public Connection getConnection() {
@@ -34,21 +35,30 @@ public class PPCDatabase {
     private void createUsersTable() throws SQLException {
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE IF NOT EXISTS users" +
-                "(user_id INT(6) PRIMARY KEY AUTO_INCREMENT," +
-                " first_name VARCHAR(30) NOT NULL," +
-                " last_name VARCHAR(30) NOT NULL," +
-                " email VARCHAR(30) NOT NULL UNIQUE," +
-                " password VARCHAR(30) NOT NULL," +
-                " status VARCHAR(3) CHECK (status IN ('ADM', 'LEC', 'STU')));");
+                "(user_id INT(8) PRIMARY KEY AUTO_INCREMENT," +
+                " first_name VARCHAR(64) NOT NULL," +
+                " last_name VARCHAR(64) NOT NULL," +
+                " email VARCHAR(64) NOT NULL UNIQUE," +
+                " password VARCHAR(256) NOT NULL," +
+                " status VARCHAR(64) CHECK (status IN ('ADM', 'LEC', 'STU')));");
     }
 
     private void createLecturesTable() throws SQLException {
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE IF NOT EXISTS lectures" +
-                "(lecture_id INT(6) PRIMARY KEY AUTO_INCREMENT," +
-                " lecture_name VARCHAR(30) NOT NULL UNIQUE," +
-                " file_name VARCHAR(35) NOT NULL UNIQUE," +
-                " video_url VARCHAR(128) DEFAULT NULL);");
+                "(lecture_id INT(8) PRIMARY KEY AUTO_INCREMENT," +
+                " lecture_name VARCHAR(64) NOT NULL UNIQUE," +
+                " file_name VARCHAR(64) NOT NULL UNIQUE," +
+                " video_url VARCHAR(64) DEFAULT NULL);");
+    }
+
+    private void createQuestionsTable() throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.execute("CREATE TABLE IF NOT EXISTS questions" +
+                "(question_id INT(8) PRIMARY KEY AUTO_INCREMENT," +
+                " lecture_id INT(8) REFERENCES lectures(lecture_id)," +
+                " file_name VARCHAR(64) NOT NULL UNIQUE," +
+                " question_type VARCHAR(64) CHECK (question_type IN ('TF', 'MC', 'QR')));");
     }
 
 }
