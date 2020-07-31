@@ -109,7 +109,8 @@ button:hover span {
     padding-left: 4.68%;
     display: table;
     width: 96.82%;
-    font-size: 199%;
+    font-family: cursive;
+    font-size: 2.2vw;
     border-radius: 25px 25px 25px 25px;
     -moz-border-radius: 25px 25px 25px 25px;
     -webkit-border-radius: 25px 25px 25px 25px;
@@ -138,7 +139,7 @@ button:hover span {
     font-family: "Courier New";
     font-style: italic;
     font-weight: bold;
-    font-size: 150%;
+    font-size: 2vw;
     color: whitesmoke;
     text-shadow: 12px 12px 12px #a3a3c2, 0 0 25px #a3a3c2, 5px 5px 5px #a3a3c2;
 }
@@ -170,7 +171,7 @@ button:hover span {
 .name {
     color: #979cb0;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 1.5vw;
     letter-spacing: 0.64px;
     margin-left: 12px;
 }
@@ -178,7 +179,7 @@ button:hover span {
 .value {
     color: rebeccapurple;
     font-weight: 700;
-    font-size: 34px;
+    font-size: 2.2vw;
     text-align: right;
 }
 

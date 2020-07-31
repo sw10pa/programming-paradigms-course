@@ -80,59 +80,82 @@ button:hover span {
     content: "Log Out";
 }
 
-.title{
-    margin-top: 3%;
-    background: purple;
+.title {
+    margin-top: 2%;
     margin-left: 25%;
     width: 50%;
+    font-family: cursive;
+    font-size: 2.5vw;
+    font-weight: bold;
     height: 7%;
-    font-size: 100%;
     padding-top: 1%;
+    color: whitesmoke;
     text-align: center;
     padding-bottom: 1%;
 }
 
-.main{
+.main {
     margin-left: 6%;
     margin-top: 2%;
     height: 68%;
 }
 
-.left-side{
-    float:left;
+.left-side {
+    float: left;
     width: 44%;
     height: 100%;
     margin-right: 4%;
 }
 
-.video-player{
-    width : 100%;
-    height : 75%;
+.video-player {
+    width: 100%;
+    height: 75%;
 }
 
-.button{
+.button {
     outline: 0;
-    background: #800080;
+    background-color: #55076f;
     width: 100%;
     border: 0;
     height: 16%;
-    padding: 2%;
+    padding: 1%;
     margin-top: 5%;
-    color: #FFFFFF;
-    font-size: 100%;
+    color: whitesmoke;
+    font-size: 1.5vw;
     cursor: pointer;
+
 }
 
 .button:hover, .button:active, .button:focus {
     background-image: radial-gradient(#990099, #730099, #800080);
 }
 
-.right-side{
+.right-side {
+    backdrop-filter: blur(0.3px);
     text-align: center;
-    float:left;
-    width: 44%;
-    background-color: whitesmoke;
+    float: left;
+    width: 48%;
     overflow-y: auto;
-    color:black;
     height: 100%;
+    font-family: cursive;
+    border-radius: 2%;
+    color: whitesmoke;
 }
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    border-radius: 20%;
+}
+
+::-webkit-scrollbar {
+    width: 2%;
+    background-color: rebeccapurple;
+    border-radius: 20%;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(33, 7, 43, 0.73);
+}
+
+
