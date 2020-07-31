@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 @Controller
@@ -37,7 +38,7 @@ public class RegistrationHandler {
                      @RequestParam String firstName,
                      @RequestParam String lastName,
                      @RequestParam String username,
-                     @RequestParam String password) throws IOException, SQLException {
+                     @RequestParam String password) throws IOException, SQLException{
 
         User user = dbManager.getUserByEmail(username);
 
@@ -46,7 +47,7 @@ public class RegistrationHandler {
             ses.setAttribute("type", "registration");
         } else {
             ses.setAttribute("success", "Registration completed successfully");
-            dbManager.addUser(new User(firstName, lastName, username, password));
+            dbManager.addUser(new User(firstName, lastName, username, AuthenticationHandler.hashPassword(password)));
         }
         resp.sendRedirect("/");
     }

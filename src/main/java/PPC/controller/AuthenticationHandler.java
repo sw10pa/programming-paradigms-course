@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 @Controller
@@ -61,14 +64,14 @@ public class AuthenticationHandler {
                               @RequestParam String password) throws IOException, SQLException {
         ModelAndView ret = new ModelAndView("log-in");
         User user = dbManager.getUserByEmail(username);
-        if (illegalCredentials(ret, user, username, password)) return ret;
+        if (illegalCredentials(ret, user, password)) return ret;
         ses.setAttribute("user", user);
         resp.sendRedirect("/home");
         return null;
     }
 
-    private boolean illegalCredentials(ModelAndView ret, User user, String username, String password) {
-        if (user == null || !user.getPassword().equals(password)) {
+    private boolean illegalCredentials(ModelAndView ret, User user, String password) {
+        if (user == null || !user.getPassword().equals(hashPassword(password))) {
             ret.addObject("error", "Incorrect username or password");
             return true;
         }
@@ -80,4 +83,32 @@ public class AuthenticationHandler {
         ses.invalidate();
         resp.sendRedirect("/");
     }
+
+    @RequestMapping("/change-password")
+    public void changePassword(HttpSession ses) {
+
+    }
+
+    protected static String hashPassword(String password) {
+
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-512");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        assert md != null;
+
+        byte[] messageDigest = md.digest(password.getBytes());
+
+        BigInteger no = new BigInteger(1, messageDigest);
+
+        StringBuilder hashtext = new StringBuilder(no.toString(16));
+
+        while (hashtext.length() < 32)
+            hashtext.insert(0, "0");
+
+        return hashtext.toString();
+    }
+
 }
