@@ -14,13 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 @Controller
 public class QuizHandler {
@@ -115,4 +113,53 @@ public class QuizHandler {
         return ret;
     }
 
+
+    @PostMapping("/edit-quiz")
+    public ModelAndView editQuiz(@RequestParam String question,
+                                 @RequestParam String answer,
+                                 @RequestParam String lectureId,
+                                 @RequestParam String questionType,
+                                 @RequestParam(required = false) String response,
+                                 @RequestParam(required = false) List<String> wrongAnswer) throws IOException, SQLException {
+        ModelAndView ret = new ModelAndView("add-question");
+
+        if (questionType.equals(Question.TRUE_FALSE))
+            addTrueFalse(question, lectureId, questionType, answer);
+        else if (questionType.equals((Question.QUESTION_RESPONSE)))
+            addQuestionResponse(question, lectureId, questionType, answer, response);
+        else addMultipleChoice(question, answer, lectureId, questionType, wrongAnswer);
+
+        return ret;
+    }
+
+
+    private void addTrueFalse(String question, String lectureId, String questionType, String answer) throws IOException, SQLException {
+        ArrayList<String> params = new ArrayList<>();
+        params.add(question);
+        params.add("True");
+        params.add("False");
+
+        Question questionObj = new Question(Integer.parseInt(lectureId), questionType, params.indexOf(answer), params);
+        dbManager.addQuestion(questionObj);
+    }
+
+    private void addQuestionResponse(String question, String lectureId, String questionType, String answer, String response) throws IOException, SQLException {
+        ArrayList<String> params = new ArrayList<>();
+        params.add(question);
+        params.add(response);
+
+        Question questionObj = new Question(Integer.parseInt(lectureId), questionType, params.indexOf(answer), params);
+        dbManager.addQuestion(questionObj);
+
+    }
+
+    private void addMultipleChoice(String question, String answer, String lectureId, String questionType, List<String> wrongAnswers) throws IOException, SQLException {
+        ArrayList<String> params = new ArrayList<>();
+        params.add(question);
+        params.addAll(wrongAnswers);
+        params.add((new Random().nextInt(4)) + 1, answer);
+
+        Question questionObj = new Question(Integer.parseInt(lectureId), questionType, params.indexOf(answer), params);
+        dbManager.addQuestion(questionObj);
+    }
 }
