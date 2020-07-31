@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<div class = "title"> Lecture ${lectureId}: <% out.write(lecture.getLectureName()); %> </div>
+<div class = "title"><% out.write(lecture.getLectureName()); %> </div>
 
 
 <div class = "main">
@@ -61,7 +61,7 @@
             <button type = "submit" class = "button-link"> Edit Link </button>
         </form>
 
-        <form action = "/edit-quiz"  method = "POST">
+        <form action = "/edit-quiz"  method = "GET">
             <input name="lectureId" type = "hidden" value = "${lectureId}">
             <button class = "button-quiz" type="submit"> Edit Quiz </button>
         </form>
