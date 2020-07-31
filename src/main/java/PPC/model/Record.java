@@ -3,17 +3,17 @@ package PPC.model;
 public class Record {
 
     private int recordId;
-    private final int studentId;
+    private final int userId;
     private final int questionId;
 
-    public Record(int recordId, int studentId, int questionId) {
+    public Record(int recordId, int userId, int questionId) {
         this.recordId = recordId;
-        this.studentId = studentId;
+        this.userId = userId;
         this.questionId = questionId;
     }
 
-    public Record(int studentId, int questionId) {
-        this.studentId = studentId;
+    public Record(int userId, int questionId) {
+        this.userId = userId;
         this.questionId = questionId;
     }
 
@@ -21,8 +21,8 @@ public class Record {
         return recordId;
     }
 
-    public int getStudentId() {
-        return studentId;
+    public int getUserId() {
+        return userId;
     }
 
     public int getQuestionId() {

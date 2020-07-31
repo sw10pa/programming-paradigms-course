@@ -181,36 +181,36 @@ public class PPCDatabaseManager {
     /**************************************** RECORDS TABLE ****************************************/
 
     public void addRecord(Record record) throws SQLException {
-        if (!hasAnswered(record.getStudentId(), record.getQuestionId())) return;
+        if (!hasAnswered(record.getUserId(), record.getQuestionId())) return;
         PreparedStatement preparedStatement = connection.prepareStatement
-                ("INSERT INTO records (student_id, question_id) VALUES (?, ?);");
-        preparedStatement.setInt(1, record.getStudentId());
+                ("INSERT INTO records (user_id, question_id) VALUES (?, ?);");
+        preparedStatement.setInt(1, record.getUserId());
         preparedStatement.setInt(2, record.getQuestionId());
         preparedStatement.execute();
     }
 
-    private boolean hasAnswered(int studentId, int questionId) throws SQLException {
+    private boolean hasAnswered(int userId, int questionId) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement
-                ("SELECT * FROM records WHERE student_id = ? AND question_id = ?;");
-        preparedStatement.setInt(1, studentId);
+                ("SELECT * FROM records WHERE user_id = ? AND question_id = ?;");
+        preparedStatement.setInt(1, userId);
         preparedStatement.setInt(2, questionId);
         ResultSet resultSet = preparedStatement.executeQuery();
-        return resultSet.next();
+        return !resultSet.next();
     }
 
-    public int getTotalScore(int studentId) throws SQLException {
+    public int getTotalScore(int userId) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement
-                ("SELECT COUNT(*) FROM records WHERE student_id = ?;");
-        preparedStatement.setInt(1, studentId);
+                ("SELECT COUNT(*) FROM records WHERE user_id = ?;");
+        preparedStatement.setInt(1, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         return resultSet.getInt(1);
     }
 
-    public int getLectureScore(int studentId, int lectureId) throws SQLException {
+    public int getLectureScore(int userId, int lectureId) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement
-                ("SELECT COUNT(*) FROM records r JOIN questions q ON r.question_id = q.question_id WHERE r.student_id = ? AND q.lecture_id = ?;");
-        preparedStatement.setInt(1, studentId);
+                ("SELECT COUNT(*) FROM records r JOIN questions q ON r.question_id = q.question_id WHERE r.user_id = ? AND q.lecture_id = ?;");
+        preparedStatement.setInt(1, userId);
         preparedStatement.setInt(2, lectureId);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();

@@ -89,7 +89,7 @@ public class AuthenticationHandler {
 
     }
 
-    protected static String hashPassword(String password) {
+    public static String hashPassword(String password) {
 
         MessageDigest md = null;
         try {
