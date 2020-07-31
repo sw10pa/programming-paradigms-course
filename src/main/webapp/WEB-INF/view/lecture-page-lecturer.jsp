@@ -1,4 +1,8 @@
-<%--
+<%@ page import="PPC.model.User" %>
+<%@ page import="PPC.model.Lecture" %>
+<%@ page import="PPC.database.PPCDatabase" %>
+<%@ page import="PPC.database.PPCDatabaseManager" %>
+<%@ page import="PPC.filesystem.FileManager" %><%--
   Created by IntelliJ IDEA.
   User: Whiskeyjack
   Date: 26-Jul-20
@@ -8,11 +12,72 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>LECTURUS</title>
+    <link href="/resources/style/css/lecturePageLecturerStyle.css" type="text/css" rel="stylesheet">
+    <link href="/resources/image/logo.png" rel="shortcut icon" type="image/x-icon">
+    <%
+        PPCDatabase db = new PPCDatabase();
+        PPCDatabaseManager dbManager = new PPCDatabaseManager(db.getConnection());
+        Lecture lecture = dbManager.getLectureById(Integer.parseInt((String) request.getAttribute("lectureId")));
+    %>
 </head>
-<body>
-<h1>ყველაზე მაგარი ლექტორია ბებო</h1>
-<h1>ერთი ერთზე ნაცემი ჰყავს რემბო</h1><br>
-<h3>BTW Lecture ID = ${lectureId}</h3><br>
+<body class="body">
+<div class="info">
+    <div class="logo">
+        <nav>
+            <a href="/home"> <img class="icon" src="/resources/image/logo.png"/></a>
+        </nav>
+    </div>
+
+    <div class="course-name">
+        <nav>
+            <img class="course-name-text" src="/resources/image/v2.png"/>
+        </nav>
+    </div>
+    <div class="log-out">
+        <form action="/logout">
+            <button type="submit" class="log-out-button">
+            <span>
+                <%
+                    User currUser = (User) request.getSession().getAttribute("user");
+                    String firstName = currUser.getFirstName();
+                    String lastName = currUser.getLastName();
+                    out.write(firstName + " " + lastName);
+                %>
+            </span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class = "title"> Lecture ${lectureId}: <% out.write(lecture.getLectureName()); %> </div>
+
+
+<div class = "main">
+    <div class = "left-side">
+        <% String url = lecture.getVideoUrl(); %>
+        <form action = "/edit-text" method = "POST">
+            <input class = "vide-url" type = "text" name = "videoURL" value = "<%=url%>">
+            <button type = "submit" class = "button-link"> Edit Link </button>
+        </form>
+
+        <form action = "/edit-quiz"  method = "POST">
+            <input name="lectureId" type = "hidden" value = "${lectureId}">
+            <button class = "button-quiz" type="submit"> Edit Quiz </button>
+        </form>
+    </div>
+
+        <%
+            String lectureText = FileManager.readFile(Lecture.LECTURES_FILES_PATH, lecture.getFileName());
+        %>
+
+        <form action = "/edit-text" method = "POST">
+            <textarea class = "right-side" type = "text" name="" >
+                <%=lectureText%>
+            </textarea>
+            <button type = "submit" class = "button-text"> Edit Text</button>
+        </form>
+
+</div>
+
 </body>
 </html>
