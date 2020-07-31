@@ -54,8 +54,16 @@
             final PPCDatabaseManager dbManager = new PPCDatabaseManager(db.getConnection());
             ArrayList<Lecture> lectures = dbManager.getAllLectures();
             for (Lecture lec : lectures) {
-                out.write("<a href = \"/lecture?lectureId=" + lec.getLectureId() + "\"> <div class = \"lecture\"> " +
-                        "<div class = \"lecture-name\">" + lec.getLectureName() + "</div> </div> </a>");
+               if(currUser.getStatus().equals(User.STUDENT)) {
+                   out.write("<a href = \"/lecture?lectureId=" + lec.getLectureId() + "\"> <div class = \"lecture\"> "
+                           + "<div class = \"lecture-name\">" + lec.getLectureName() + "  (" +
+                           dbManager.getLectureScore(currUser.getUserId(), lec.getLectureId()) + "/" +
+                           dbManager.getQuestionsByLectureId(lec.getLectureId()).size() + ") " +
+                           "</div>" + "</div></a>");
+               }else{
+                   out.write("<a href = \"/lecture?lectureId=" + lec.getLectureId() + "\"> <div class = \"lecture\"> "
+                           + "<div class = \"lecture-name\">" + lec.getLectureName() + "</div>" + "</div></a>");
+               }
             }
         %>
     </div>
