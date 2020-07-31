@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileManagerTest {
 
     @Test
-    public void FileManagerFunctionsTest() throws IOException {
+    public void createFilesTest() throws IOException {
         String path = "src/main/java/PPC/test/";
         String fileName = "Begging.txt";
         String text = "Oh\n" +

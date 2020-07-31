@@ -21,7 +21,7 @@ public class LecturesTableTest {
     }
 
     @Test
-    public void addLectureTest() throws SQLException, IOException {
+    public void addLecturesTest() throws SQLException, IOException {
         for (int i = 1; i <= LECTURES_COUNT; i++) {
             dbManager.addLecture(new Lecture("Lecture " + i));
         }

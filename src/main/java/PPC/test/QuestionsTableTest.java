@@ -19,7 +19,7 @@ public class QuestionsTableTest {
     }
 
     @Test
-    public void addQuestionTest() throws IOException, SQLException {
+    public void addQuestionsTest() throws IOException, SQLException {
         ArrayList<String> questionStructure = new ArrayList<>();
 
         questionStructure.add("TF Question?");

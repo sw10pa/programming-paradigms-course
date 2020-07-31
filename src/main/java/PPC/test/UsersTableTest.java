@@ -17,7 +17,7 @@ public class UsersTableTest {
     }
 
     @Test
-    public void addUserTest() throws SQLException {
+    public void addUsersTest() throws SQLException {
         User dchec = new User("Davit", "Chechelashvili", "dchec18@freeuni.edu.ge", "Davit13");
         User sgurg = new User("Stepane", "Gurgenidze", "sgurg18@freeuni.edu.ge", "Stepane27");
         User nadei = new User("Nikoloz", "Adeishvili", "nadei18@freeuni.edu.ge", "Nikoloz29");
