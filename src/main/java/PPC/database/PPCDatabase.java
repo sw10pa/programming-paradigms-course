@@ -66,7 +66,7 @@ public class PPCDatabase {
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE IF NOT EXISTS records" +
                 "(record_id INT(8) PRIMARY KEY AUTO_INCREMENT," +
-                " student_id INT(8) REFERENCES students(student_id)," +
+                " user_id INT(8) REFERENCES users(user_id)," +
                 " question_id INT(8) REFERENCES questions(question_id));");
     }
 
