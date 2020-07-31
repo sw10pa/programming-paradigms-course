@@ -69,7 +69,7 @@
                                 "<span class=\"name\">" +
                                 user.getFirstName() + " " + user.getLastName() +
                                 "</span>\n<span class=\"value\">" +
-                                dbManager.getUserScore(user.getEmail()) +
+                                dbManager.getTotalScore(user.getUserId()) +
                                 "</span>\n</article>");
                     }
                 }

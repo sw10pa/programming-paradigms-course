@@ -180,8 +180,41 @@ public class PPCDatabaseManager {
 
     /**************************************** RECORDS TABLE ****************************************/
 
-    public int getUserScore(String email) {
-        return 0;
+    public void addRecord(Record record) throws SQLException {
+        if (!hasAnswered(record.getStudentId(), record.getQuestionId())) return;
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("INSERT INTO records (student_id, question_id) VALUES (?, ?);");
+        preparedStatement.setInt(1, record.getStudentId());
+        preparedStatement.setInt(2, record.getQuestionId());
+        preparedStatement.execute();
+    }
+
+    private boolean hasAnswered(int studentId, int questionId) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("SELECT * FROM records WHERE student_id = ? AND question_id = ?;");
+        preparedStatement.setInt(1, studentId);
+        preparedStatement.setInt(2, questionId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet.next();
+    }
+
+    public int getTotalScore(int studentId) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("SELECT COUNT(*) FROM records WHERE student_id = ?;");
+        preparedStatement.setInt(1, studentId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
+    }
+
+    public int getLectureScore(int studentId, int lectureId) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("SELECT COUNT(*) FROM records r JOIN questions q ON r.question_id = q.question_id WHERE r.student_id = ? AND q.lecture_id = ?;");
+        preparedStatement.setInt(1, studentId);
+        preparedStatement.setInt(2, lectureId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
     }
 
 }

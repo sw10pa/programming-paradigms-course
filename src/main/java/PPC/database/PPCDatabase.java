@@ -15,6 +15,7 @@ public class PPCDatabase {
         createUsersTable();
         createLecturesTable();
         createQuestionsTable();
+        createRecordsTable();
     }
 
     public Connection getConnection() {
@@ -59,6 +60,14 @@ public class PPCDatabase {
                 " lecture_id INT(8) REFERENCES lectures(lecture_id)," +
                 " file_name VARCHAR(64) NOT NULL UNIQUE," +
                 " question_type VARCHAR(64) CHECK (question_type IN ('TF', 'MC', 'QR')));");
+    }
+
+    private void createRecordsTable() throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.execute("CREATE TABLE IF NOT EXISTS records" +
+                "(record_id INT(8) PRIMARY KEY AUTO_INCREMENT," +
+                " student_id INT(8) REFERENCES students(student_id)," +
+                " question_id INT(8) REFERENCES questions(question_id));");
     }
 
 }

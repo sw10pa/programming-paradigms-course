@@ -3,6 +3,8 @@ package PPC.controller;
 import PPC.database.PPCDatabase;
 import PPC.database.PPCDatabaseManager;
 import PPC.model.Question;
+import PPC.model.Record;
+import PPC.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,7 +65,7 @@ public class QuizHandler {
     }
 
     @PostMapping("/quiz")
-    public ModelAndView post(HttpSession ses, HttpServletResponse resp, @RequestParam String answer) throws IOException {
+    public ModelAndView post(HttpSession ses, HttpServletResponse resp, @RequestParam String answer) throws IOException, SQLException {
         if (ses.getAttribute("user") == null) resp.sendRedirect("/logout");
 
         ArrayList<Question> questions = (ArrayList<Question>) ses.getAttribute("questions");
@@ -83,12 +85,16 @@ public class QuizHandler {
         return ret;
     }
 
-    private void checkAnswer(HttpSession ses, int index, ArrayList<Question> questions, String answer) {
+    private void checkAnswer(HttpSession ses, int index, ArrayList<Question> questions, String answer) throws SQLException {
         Question question = questions.get(index);
+        User user = (User) ses.getAttribute("user");
         String correctAnswer = question.getQuestionStructure().get(question.getRightAnswerIndex());
-        if (correctAnswer.equals(answer))
+        if (correctAnswer.equals(answer)) {
             ses.setAttribute("correctAnswerCount", (int) ses.getAttribute("correctAnswerCount") + 1);
+            dbManager.addRecord(new Record(user.getUserId(), question.getQuestionId()));
+        }
     }
+
 
     private ModelAndView endQuiz(HttpSession ses) {
         ModelAndView ret = new ModelAndView("quiz-result");
