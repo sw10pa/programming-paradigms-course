@@ -37,20 +37,20 @@ public class PPCDatabase {
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE IF NOT EXISTS users" +
                 "(user_id INT(8) PRIMARY KEY AUTO_INCREMENT," +
-                " first_name VARCHAR(32) NOT NULL," +
-                " last_name VARCHAR(32) NOT NULL," +
-                " email VARCHAR(32) NOT NULL UNIQUE," +
+                " first_name VARCHAR(64) NOT NULL," +
+                " last_name VARCHAR(64) NOT NULL," +
+                " email VARCHAR(64) NOT NULL UNIQUE," +
                 " password VARCHAR(256) NOT NULL," +
-                " status VARCHAR(32) CHECK (status IN ('ADM', 'LEC', 'STU')));");
+                " status VARCHAR(64) CHECK (status IN ('ADM', 'LEC', 'STU')));");
     }
 
     private void createLecturesTable() throws SQLException {
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE IF NOT EXISTS lectures" +
                 "(lecture_id INT(8) PRIMARY KEY AUTO_INCREMENT," +
-                " lecture_name VARCHAR(32) NOT NULL UNIQUE," +
-                " file_name VARCHAR(32) NOT NULL UNIQUE," +
-                " video_url VARCHAR(32) DEFAULT NULL);");
+                " lecture_name VARCHAR(64) NOT NULL UNIQUE," +
+                " file_name VARCHAR(64) NOT NULL UNIQUE," +
+                " video_url VARCHAR(64) DEFAULT NULL);");
     }
 
     private void createQuestionsTable() throws SQLException {
@@ -58,8 +58,8 @@ public class PPCDatabase {
         statement.execute("CREATE TABLE IF NOT EXISTS questions" +
                 "(question_id INT(8) PRIMARY KEY AUTO_INCREMENT," +
                 " lecture_id INT(8) REFERENCES lectures(lecture_id)," +
-                " file_name VARCHAR(32) NOT NULL UNIQUE," +
-                " question_type VARCHAR(32) CHECK (question_type IN ('TF', 'MC', 'QR')));");
+                " file_name VARCHAR(64) NOT NULL UNIQUE," +
+                " question_type VARCHAR(64) CHECK (question_type IN ('TF', 'MC', 'QR')));");
     }
 
     private void createRecordsTable() throws SQLException {
