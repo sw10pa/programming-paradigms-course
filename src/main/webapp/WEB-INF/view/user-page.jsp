@@ -2,7 +2,8 @@
 <%@ page import="PPC.database.PPCDatabaseManager" %>
 <%@ page import="PPC.model.Lecture" %>
 <%@ page import="PPC.model.User" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.sql.SQLException" %>
 <%--
   Created by IntelliJ IDEA.
   User: Niko
@@ -50,7 +51,7 @@
     <div class="lectures">
         <%
             PPCDatabase db = new PPCDatabase();
-            PPCDatabaseManager dbManager = new PPCDatabaseManager(db.getConnection());
+            final PPCDatabaseManager dbManager = new PPCDatabaseManager(db.getConnection());
             ArrayList<Lecture> lectures = dbManager.getAllLectures();
             for (Lecture lec : lectures) {
                 out.write("<a href = \"/lecture?lectureId=" + lec.getLectureId() + "\"> <div class = \"lecture\"> " +
@@ -63,14 +64,30 @@
         <main class="profiles">
             <%
                 ArrayList<User> users = dbManager.getAllUsers();
+                Collections.sort(users, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        try {
+                            return dbManager.getTotalScore(o2.getUserId()) -
+                                    dbManager.getTotalScore(o1.getUserId());
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                        return 0;
+                    }
+                });
                 for (User user : users) {
                     if (user.getStatus().equals(User.STUDENT)) {
-                        out.write("<article class=\"profile\">\n" +
-                                "<span class=\"name\">" +
-                                user.getFirstName() + " " + user.getLastName() +
-                                "</span>\n<span class=\"value\">" +
-                                dbManager.getTotalScore(user.getUserId()) +
-                                "</span>\n</article>");
+                        try {
+                            out.write("<article class=\"profile\">\n" +
+                                    "<span class=\"name\">" +
+                                    user.getFirstName() + " " + user.getLastName() +
+                                    "</span>\n<span class=\"value\">" +
+                                    dbManager.getTotalScore(user.getUserId()) +
+                                    "</span>\n</article>");
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
                     }
                 }
             %>

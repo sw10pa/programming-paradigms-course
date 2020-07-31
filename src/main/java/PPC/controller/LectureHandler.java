@@ -20,9 +20,9 @@ public class LectureHandler {
 
         User user = (User) ses.getAttribute("user");
         if (user.getStatus().equals(User.STUDENT))
-            ret = new ModelAndView("lecture-page-lecturer");
-        else
             ret = new ModelAndView("lecture-page-student");
+        else
+            ret = new ModelAndView("lecture-page-lecturer");
 
         String lectureId = req.getParameter("lectureId");
         ret.addObject("lectureId", lectureId);
