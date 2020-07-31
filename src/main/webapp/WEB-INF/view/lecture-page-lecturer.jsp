@@ -55,8 +55,9 @@
 <div class = "main">
     <div class = "left-side">
         <% String url = lecture.getVideoUrl(); %>
-        <form action = "/edit-text" method = "POST">
+        <form action = "/edit-link" method = "POST">
             <input class = "vide-url" type = "text" name = "videoURL" value = "<%=url%>">
+            <input name="lectureId" type = "hidden" value = "${lectureId}">
             <button type = "submit" class = "button-link"> Edit Link </button>
         </form>
 
@@ -71,9 +72,10 @@
         %>
 
         <form action = "/edit-text" method = "POST">
-            <textarea class = "right-side" type = "text" name="" >
+            <textarea class = "right-side" type = "text" name="newText" >
                 <%=lectureText%>
             </textarea>
+            <input name="lectureId" type = "hidden" value = "${lectureId}">
             <button type = "submit" class = "button-text"> Edit Text</button>
         </form>
 

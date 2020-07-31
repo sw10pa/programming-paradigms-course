@@ -46,20 +46,24 @@ public class LectureHandler {
     }
 
     @PostMapping("/edit-link")
-    public void editVideoUrl(HttpServletResponse resp,
+    public ModelAndView editVideoUrl(HttpServletResponse resp,
                              @RequestParam String lectureId,
                              @RequestParam String videoURL) throws IOException, SQLException {
         dbManager.setLectureVideoUrl(Integer.parseInt(lectureId), videoURL);
-        resp.sendRedirect("/lecture");
+        ModelAndView ret = new ModelAndView("lecture-page-lecturer");
+        ret.addObject("lectureId", lectureId);
+        return ret;
     }
 
     @PostMapping("/edit-text")
-    public void editLectureText(HttpServletResponse resp,
+    public ModelAndView editLectureText(HttpServletResponse resp,
                                 @RequestParam String lectureId,
                                 @RequestParam String newText) throws SQLException, IOException {
         Lecture lec = dbManager.getLectureById(Integer.parseInt(lectureId));
         FileManager.writeToFile(Lecture.LECTURES_FILES_PATH, lec.getFileName(), newText);
-        resp.sendRedirect("/lecture");
+        ModelAndView ret = new ModelAndView("lecture-page-lecturer");
+        ret.addObject("lectureId", lectureId);
+        return ret;
     }
 
     @GetMapping("/edit-quiz")
