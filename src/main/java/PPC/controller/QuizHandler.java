@@ -119,16 +119,16 @@ public class QuizHandler {
                                  @RequestParam String answer,
                                  @RequestParam String lectureId,
                                  @RequestParam String questionType,
-                                 @RequestParam(required = false) String response,
                                  @RequestParam(required = false) List<String> wrongAnswer) throws IOException, SQLException {
         ModelAndView ret = new ModelAndView("add-question");
 
         if (questionType.equals(Question.TRUE_FALSE))
             addTrueFalse(question, lectureId, questionType, answer);
         else if (questionType.equals((Question.QUESTION_RESPONSE)))
-            addQuestionResponse(question, lectureId, questionType, answer, response);
+            addQuestionResponse(question, lectureId, questionType, answer);
         else addMultipleChoice(question, answer, lectureId, questionType, wrongAnswer);
 
+        ret.addObject("lectureId", lectureId);
         return ret;
     }
 
@@ -143,10 +143,10 @@ public class QuizHandler {
         dbManager.addQuestion(questionObj);
     }
 
-    private void addQuestionResponse(String question, String lectureId, String questionType, String answer, String response) throws IOException, SQLException {
+    private void addQuestionResponse(String question, String lectureId, String questionType, String answer) throws IOException, SQLException {
         ArrayList<String> params = new ArrayList<>();
         params.add(question);
-        params.add(response);
+        params.add(answer);
 
         Question questionObj = new Question(Integer.parseInt(lectureId), questionType, params.indexOf(answer), params);
         dbManager.addQuestion(questionObj);

@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<div class = "title"> Lecture ${lectureId}: <% out.write(lecture.getLectureName()); %> </div>
+<div class = "title"><% out.write(lecture.getLectureName()); %> </div>
 
 <div class = "main">
     <div class = "left-side">
