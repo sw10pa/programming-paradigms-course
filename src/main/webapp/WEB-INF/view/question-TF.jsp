@@ -51,11 +51,11 @@
         %>
 
         <div class="answer-container">
-            <input type = "radio" id = "true" name = "answer" />
-            <label for = "true"> TRUE</label><br>
+            <input type = "radio" id = "true" name = "answer" value = "True"/>
+            <label for = "true"> TRUE </label><br>
         </div>
         <div class="answer-container">
-            <input type = "radio" id = "false" name="answer">
+            <input type = "radio" id = "False" name="answer" value = "False">
             <label for = "false"> FALSE</label><br>
         </div>
         <button type = "submit" >SUBMIT</button>

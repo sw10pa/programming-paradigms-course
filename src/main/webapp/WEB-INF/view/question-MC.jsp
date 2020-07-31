@@ -51,7 +51,8 @@
 
         for (int i = 1; i < data.size(); i++) {
             String choice = data.get(i);
-            out.write("<div class = \"answer-container\" ><input type = \"radio\" id =\"" + i + "\" name = \"answer\"/>");
+            out.write("<div class = \"answer-container\" ><input type = \"radio\" id =\""
+                        + i + "\" value =\""+ choice +"\" name = \"answer\"/>");
             out.write("<label for=\"" + i + "\">" + choice + "</label> <br><br> </div>");
         }
     %>
