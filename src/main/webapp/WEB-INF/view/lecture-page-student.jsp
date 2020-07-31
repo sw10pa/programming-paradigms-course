@@ -18,14 +18,13 @@
         PPCDatabase db = new PPCDatabase();
         PPCDatabaseManager dbManager = new PPCDatabaseManager(db.getConnection());
         Lecture lecture = dbManager.getLectureById(Integer.parseInt((String) request.getAttribute("lectureId")));
-
     %>
 </head>
 <body class="body">
 <div class="info">
     <div class="logo">
         <nav>
-            <a href=""> <img class="icon" src="/resources/image/logo.png"/></a>
+            <a href="/home"> <img class="icon" src="/resources/image/logo.png"/></a>
         </nav>
     </div>
 
@@ -59,13 +58,16 @@
                 src="<%=url%>" frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
         </iframe>
-        <button class = "button" type="submit"> Take Quiz </button>
+        <form action = "/quiz"  method = "GET">
+            <input name="lectureId" type = "hidden" value = "${lectureId}">
+            <button class = "button" type="submit"> Take Quiz </button>
+        </form>
     </div>
 
     <div class = "right-side">
         <%
-           String jim = FileManager.readFile(Lecture.LECTURES_FILES_PATH, lecture.getFileName());
-           out.write(jim);
+           String lectureText = FileManager.readFile(Lecture.LECTURES_FILES_PATH, lecture.getFileName());
+           out.write(lectureText);
         %>
 
     </div>
