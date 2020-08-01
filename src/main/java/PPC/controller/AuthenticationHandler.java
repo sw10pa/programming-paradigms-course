@@ -84,10 +84,6 @@ public class AuthenticationHandler {
         resp.sendRedirect("/");
     }
 
-    @RequestMapping("/change-password")
-    public void changePassword(HttpSession ses) {
-
-    }
 
     public static String hashPassword(String password) {
 

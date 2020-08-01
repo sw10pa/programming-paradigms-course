@@ -6,7 +6,6 @@ import PPC.filesystem.FileManager;
 import PPC.model.Lecture;
 import PPC.model.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,8 +46,8 @@ public class LectureHandler {
 
     @PostMapping("/edit-link")
     public ModelAndView editVideoUrl(HttpServletResponse resp,
-                             @RequestParam String lectureId,
-                             @RequestParam String videoURL) throws IOException, SQLException {
+                                     @RequestParam String lectureId,
+                                     @RequestParam String videoURL) throws IOException, SQLException {
         dbManager.setLectureVideoUrl(Integer.parseInt(lectureId), videoURL);
         ModelAndView ret = new ModelAndView("lecture-page-lecturer");
         ret.addObject("lectureId", lectureId);
@@ -57,8 +56,8 @@ public class LectureHandler {
 
     @PostMapping("/edit-text")
     public ModelAndView editLectureText(HttpServletResponse resp,
-                                @RequestParam String lectureId,
-                                @RequestParam String newText) throws SQLException, IOException {
+                                        @RequestParam String lectureId,
+                                        @RequestParam String newText) throws SQLException, IOException {
         Lecture lec = dbManager.getLectureById(Integer.parseInt(lectureId));
         FileManager.writeToFile(Lecture.LECTURES_FILES_PATH, lec.getFileName(), newText);
         ModelAndView ret = new ModelAndView("lecture-page-lecturer");
