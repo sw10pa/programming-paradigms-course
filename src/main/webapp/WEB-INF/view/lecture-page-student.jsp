@@ -18,7 +18,9 @@
         PPCDatabase db = new PPCDatabase();
         PPCDatabaseManager dbManager = new PPCDatabaseManager(db.getConnection());
         Lecture lecture = dbManager.getLectureById(Integer.parseInt((String) request.getAttribute("lectureId")));
+        String lectureName = lecture.getLectureName();
     %>
+    <title><%=lectureName%></title>
 </head>
 <body class="body">
 <div class="info">
@@ -49,7 +51,7 @@
     </div>
 </div>
 
-<div class = "title"><% out.write(lecture.getLectureName()); %> </div>
+<div class = "title"><%=lectureName%></div>
 
 <div class = "main">
     <div class = "left-side">

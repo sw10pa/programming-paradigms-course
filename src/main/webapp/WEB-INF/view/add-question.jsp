@@ -22,6 +22,7 @@
         PPCDatabaseManager dbManager = new PPCDatabaseManager(db.getConnection());
         Lecture lecture = dbManager.getLectureById(Integer.parseInt((String) request.getAttribute("lectureId")));
     %>
+    <title>Add Question</title>
 </head>
 <body class="body">
 <div class="info">

@@ -11,7 +11,7 @@
 <head>
     <link href="/resources/style/css/resultStyle.css" type="text/css" rel="stylesheet">
     <link href="/resources/image/logo.png" rel="shortcut icon" type="image/x-icon">
-    <title>stephen usaqmuri</title>
+    <title>Result</title>
 </head>
 <body class="body">
 <div class="info">
@@ -69,7 +69,7 @@
                 }
             %>
             <br>
-            <div><button class="goHome" type = "submit">Return to home page</button></div>
+            <div><button class="go-home" type = "submit">Return to home page</button></div>
         </div>
     </div>
 

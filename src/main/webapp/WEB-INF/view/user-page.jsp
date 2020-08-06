@@ -16,7 +16,7 @@
 <head>
     <link href="/resources/style/css/userPageStyle.css" type="text/css" rel="stylesheet">
     <link href="/resources/image/logo.png" rel="shortcut icon" type="image/x-icon">
-
+    <title>Home Page</title>
 </head>
 <body class="body">
 <div class="info">
