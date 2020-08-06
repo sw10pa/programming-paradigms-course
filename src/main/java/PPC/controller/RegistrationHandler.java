@@ -50,15 +50,13 @@ public class RegistrationHandler {
         User user = dbManager.getUserByEmail(username);
 
         HttpSession ses = req.getSession();
-        if (illegalCredentials(ses, user, firstName, lastName, username, password)) {
+        if (illegalCredentials(ses, user, firstName, lastName, username)) {
             ses.setAttribute("type", "registration");
         } else {
-            dbManager.addUser(new User(firstName, lastName, username, AuthenticationHandler.hashPassword(password)));
+            String randomPassword = generateRandomPassword();
+            sendPasswordToEmail(username, randomPassword);
+            dbManager.addUser(new User(firstName, lastName, username, AuthenticationHandler.hashPassword(randomPassword)));
             ses.setAttribute("success", "Registration completed successfully. Check your Email for password");
-//            String randomPassword = generateRandomPassword();
-//            sendPasswordToEmail(ses, username, randomPassword);
-//            dbManager.addUser(new User(firstName, lastName, username, AuthenticationHandler.hashPassword(randomPassword)));
-//            ses.setAttribute("success", "Registration completed successfully. Check your Email for password");
         }
         resp.sendRedirect("/");
     }
@@ -68,11 +66,10 @@ public class RegistrationHandler {
                                        User user,
                                        String firstName,
                                        String lastName,
-                                       String username,
-                                       String password) {
+                                       String username) {
 
         if (firstName.length() == 0 || lastName.length() == 0 ||
-                username.length() == 0 || password.length() == 0) {
+                username.length() == 0) {
             ses.setAttribute("error", "Please fill every field");
             return true;
         }
@@ -100,15 +97,6 @@ public class RegistrationHandler {
         int randomLength = rand.nextInt(6) + 5;
         String randomPassword = RandomStringUtils.randomAlphabetic(randomLength);
         return randomPassword;
-    }
-
-
-    @PostMapping("/change-status")
-    public void changeStatus(HttpSession ses, HttpServletResponse resp) throws SQLException, IOException {
-        User user = (User) ses.getAttribute("user");
-        if (!user.getStatus().equals(User.ADMINISTRATOR)) return;
-        dbManager.setUserStatus(user.getEmail(), User.LECTURER);
-        resp.sendRedirect("/home");
     }
 
 

@@ -25,18 +25,37 @@ public class PasswordChangeHandler {
     }
 
     @GetMapping("/change-password")
-    public ModelAndView get() {
-        return new ModelAndView("change-password");
+    public ModelAndView get(HttpSession ses) {
+        ModelAndView ret = new ModelAndView("change-password");
+
+        if (ses.getAttribute("error") != null) {
+            ret.addObject("error", ses.getAttribute("error"));
+            ses.removeAttribute("error");
+        }
+
+        if (ses.getAttribute("success") != null) {
+            ret.addObject("success", ses.getAttribute("success"));
+            ses.removeAttribute("success");
+        }
+
+        return ret;
     }
 
     @PostMapping("/change-password")
-    public void post(HttpSession ses, HttpServletResponse resp,
-                     @RequestParam String newPassword) throws IOException {
+    public ModelAndView post(HttpSession ses, HttpServletResponse resp,
+                     @RequestParam String currentPass,
+                     @RequestParam String newPass) throws IOException, SQLException {
         User user = (User) ses.getAttribute("user");
-        //dbManager.setPassword(user, AuthenticationHandler.hashPassword(newPassword));
+        ModelAndView ret = new ModelAndView("change-password");
+        currentPass = AuthenticationHandler.hashPassword(currentPass);
+        if(!currentPass.equals(user.getPassword())){
+            ret.addObject("error", "Wrong current password");
+            return ret;
+        }
+        dbManager.setPassword(user.getEmail(), AuthenticationHandler.hashPassword(newPass));
         ses.setAttribute("success", "Password changed successfully");
         resp.sendRedirect("/");
+        return null;
     }
-
 
 }

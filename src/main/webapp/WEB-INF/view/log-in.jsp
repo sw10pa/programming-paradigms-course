@@ -30,7 +30,6 @@
             <input type="text" placeholder="First Name" name="firstName"/>
             <input type="text" placeholder="Last Name" name="lastName"/>
             <input type="text" placeholder="Email" name="username"/>
-            <input type="password" placeholder="Password" name="password"/>
             <button type="submit">create</button>
             <p class="message">Already registered? <a href="#" onclick=swapForm()>Sign In</a></p>
         </form>

@@ -71,6 +71,14 @@ public class PPCDatabaseManager {
         preparedStatement.execute();
     }
 
+    public void setPassword(String email, String password) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement
+                ("UPDATE users SET password = ? WHERE email = ?;");
+        preparedStatement.setString(1, password);
+        preparedStatement.setString(2, email);
+        preparedStatement.execute();
+    }
+
     /**************************************** LECTURES TABLE ****************************************/
 
     public void addLecture(Lecture lecture) throws SQLException, IOException {

@@ -44,6 +44,7 @@
             </span>
             </button>
         </form>
+        <a href="/change-password" class = "change-password-link">Change Password</a>
     </div>
 </div>
 
@@ -93,12 +94,19 @@
                                     "</span>\n<span class=\"value\">" +
                                     dbManager.getTotalScore(user.getUserId()) +
                                     "</span>\n</article>");
+                            if(currUser.getStatus().equals(User.ADMINISTRATOR)){
+                                out.write("<form action = \"change-status\" Method = \"POST\">" +
+                                        "<input name=\"email\" type = \"hidden\" value = \"" + user.getEmail() +"\">"
+                                        + "<button type = \"submit\" class = \"make-lecturer\"> Grant "
+                                        + user.getFirstName() + " Lecturer Status </button></form>");
+                            }
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
                     }
                 }
             %>
+
         </main>
     </div>
 </div>
