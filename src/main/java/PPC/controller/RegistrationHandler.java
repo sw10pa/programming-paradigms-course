@@ -44,8 +44,7 @@ public class RegistrationHandler {
                      HttpServletResponse resp,
                      @RequestParam String firstName,
                      @RequestParam String lastName,
-                     @RequestParam String username,
-                     @RequestParam(required = false) String password) throws IOException, SQLException, MessagingException {
+                     @RequestParam String username) throws IOException, SQLException {
 
         User user = dbManager.getUserByEmail(username);
 
@@ -53,8 +52,7 @@ public class RegistrationHandler {
         if (illegalCredentials(ses, user, firstName, lastName, username)) {
             ses.setAttribute("type", "registration");
         } else {
-            String randomPassword = generateRandomPassword();
-            sendPasswordToEmail(username, randomPassword);
+            String randomPassword = sendRandomPasswordToEmail(username);
             dbManager.addUser(new User(firstName, lastName, username, AuthenticationHandler.hashPassword(randomPassword)));
             ses.setAttribute("success", "Registration completed successfully. Check your Email for password");
         }
@@ -92,15 +90,21 @@ public class RegistrationHandler {
         return index > 1;
     }
 
-    private String generateRandomPassword() {
+    private static String generateRandomPassword() {
         SecureRandom rand = new SecureRandom();
         int randomLength = rand.nextInt(6) + 5;
-        String randomPassword = RandomStringUtils.randomAlphabetic(randomLength);
-        return randomPassword;
+        return RandomStringUtils.randomAlphabetic(randomLength);
     }
 
 
-    private synchronized void sendPasswordToEmail(String recipient, String randomPassword) throws MessagingException {
+    protected static synchronized String sendRandomPasswordToEmail(String recipient) {
+        String randomPassword = generateRandomPassword();
+        Session session = initializeSession();
+        sendEmail(session, recipient, randomPassword);
+        return randomPassword;
+    }
+
+    private static Session initializeSession() {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
         props.put("mail.smtp.port", "587"); //TLS Port
@@ -114,12 +118,11 @@ public class RegistrationHandler {
                 return new PasswordAuthentication(EMAIL_FROM, PASSWORD);
             }
         };
-        Session session = Session.getInstance(props, auth);
 
-        sendEmail(session, recipient, randomPassword);
+        return Session.getInstance(props, auth);
     }
 
-    private void sendEmail(Session session, String recipient, String randomPassword) {
+    private static void sendEmail(Session session, String recipient, String randomPassword) {
         try {
             MimeMessage msg = new MimeMessage(session);
             //set message headers

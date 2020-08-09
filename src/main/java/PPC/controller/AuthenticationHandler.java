@@ -57,8 +57,7 @@ public class AuthenticationHandler {
     }
 
     @PostMapping(value = {"/", "/login"})
-    public ModelAndView login(HttpServletRequest req,
-                              HttpServletResponse resp,
+    public ModelAndView login(HttpServletResponse resp,
                               HttpSession ses,
                               @RequestParam String username,
                               @RequestParam String password) throws IOException, SQLException {
@@ -99,12 +98,12 @@ public class AuthenticationHandler {
 
         BigInteger no = new BigInteger(1, messageDigest);
 
-        StringBuilder hashtext = new StringBuilder(no.toString(16));
+        StringBuilder hashText = new StringBuilder(no.toString(16));
 
-        while (hashtext.length() < 32)
-            hashtext.insert(0, "0");
+        while (hashText.length() < 32)
+            hashText.insert(0, "0");
 
-        return hashtext.toString();
+        return hashText.toString();
     }
 
 }

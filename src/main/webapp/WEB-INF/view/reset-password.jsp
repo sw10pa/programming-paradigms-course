@@ -3,7 +3,7 @@
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <head>
-    <title>Change Password</title>
+    <title>Reset Password</title>
     <link href="/resources/style/css/styleCSS.css" type="text/css" rel="stylesheet">
 </head>
 
@@ -15,10 +15,9 @@
                 <span class="error-text">${error}</span>
             </div>
         </c:if>
-        <form action="/change-password" method="POST" class="login-form">
-            <input type="password" placeholder="Current password" name="currPassword"/>
-            <input type="password" placeholder="New password" name="newPassword"/>
-            <button type="submit">Change</button>
+        <form action="/reset-password" method="POST" class="login-form">
+            <input type="email" placeholder="Email" name="username"/>
+            <button type="submit">Reset Password</button>
         </form>
     </div>
 </div>

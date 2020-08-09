@@ -45,9 +45,8 @@ public class LectureHandler {
     }
 
     @PostMapping("/edit-link")
-    public ModelAndView editVideoUrl(HttpServletResponse resp,
-                                     @RequestParam String lectureId,
-                                     @RequestParam String videoURL) throws IOException, SQLException {
+    public ModelAndView editVideoUrl(@RequestParam String lectureId,
+                                     @RequestParam String videoURL) throws SQLException {
         dbManager.setLectureVideoUrl(Integer.parseInt(lectureId), videoURL);
         ModelAndView ret = new ModelAndView("lecture-page-lecturer");
         ret.addObject("lectureId", lectureId);
@@ -55,8 +54,7 @@ public class LectureHandler {
     }
 
     @PostMapping("/edit-text")
-    public ModelAndView editLectureText(HttpServletResponse resp,
-                                        @RequestParam String lectureId,
+    public ModelAndView editLectureText(@RequestParam String lectureId,
                                         @RequestParam String newText) throws SQLException, IOException {
         Lecture lec = dbManager.getLectureById(Integer.parseInt(lectureId));
         FileManager.writeToFile(Lecture.LECTURES_FILES_PATH, lec.getFileName(), newText);

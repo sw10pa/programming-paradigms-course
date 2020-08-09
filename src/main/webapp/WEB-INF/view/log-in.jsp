@@ -29,15 +29,16 @@
         <form action="/signup" method="POST" class="register-form">
             <input type="text" placeholder="First Name" name="firstName"/>
             <input type="text" placeholder="Last Name" name="lastName"/>
-            <input type="text" placeholder="Email" name="username"/>
+            <input type="email" placeholder="Email" name="username"/>
             <button type="submit">create</button>
             <p class="message">Already registered? <a href="#" onclick=swapForm()>Sign In</a></p>
         </form>
         <form action="/" method="POST" class="login-form">
-            <input type="text" placeholder="Email" name="username"/>
+            <input type="email" placeholder="Email" name="username"/>
             <input type="password" placeholder="Password" name="password"/>
             <button type="submit">login</button>
             <p class="message">Not registered? <a href="#" onclick=swapForm()>Create an account</a></p>
+            <p class="message">Forgot password? <a href="/reset-password">Reset password</a></p>
         </form>
         <c:if test="${type != null}">
             <script>

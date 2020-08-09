@@ -31,8 +31,8 @@ public class QuizHandler {
     }
 
     @GetMapping("/quiz")
-    public ModelAndView get(HttpServletResponse resp, HttpServletRequest req,
-                            HttpSession ses, @RequestParam String lectureId) throws IOException, SQLException {
+    public ModelAndView get(HttpServletResponse resp, HttpSession ses,
+                            @RequestParam String lectureId) throws IOException, SQLException {
         if (ses.getAttribute("user") == null) resp.sendRedirect("/logout");
 
         ArrayList<Question> questions = dbManager.getQuestionsByLectureId(Integer.parseInt(lectureId));
@@ -162,4 +162,5 @@ public class QuizHandler {
         Question questionObj = new Question(Integer.parseInt(lectureId), questionType, params.indexOf(answer), params);
         dbManager.addQuestion(questionObj);
     }
+
 }
