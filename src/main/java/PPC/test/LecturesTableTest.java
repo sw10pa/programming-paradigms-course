@@ -3,9 +3,11 @@ package PPC.test;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
+
 import PPC.model.*;
 import PPC.database.*;
 import org.junit.jupiter.api.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LecturesTableTest {

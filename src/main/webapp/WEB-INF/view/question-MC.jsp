@@ -1,12 +1,6 @@
 <%@ page import="PPC.model.Question" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="PPC.model.User" %><%--
-  Created by IntelliJ IDEA.
-  User: Niko
-  Date: 7/31/2020
-  Time: 3:29 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="PPC.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -43,8 +37,8 @@
     </div>
 </div>
 <div class="main">
-<form class="MC" action="/quiz" method = "post">
-    <%
+    <form class="MC" action="/quiz" method="post">
+            <%
         Question question = (Question) request.getAttribute("question");
         ArrayList<String> data = question.getQuestionStructure();
         out.write("<div class = \"p\">" + data.get(0) + "</div>");
@@ -57,7 +51,7 @@
         }
     %>
 
-    <button type = "submit" >SUBMIT</button>
+        <button type="submit">SUBMIT</button>
 </div>
 </form>
 </body>

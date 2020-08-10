@@ -80,7 +80,7 @@ button:hover span {
     content: "Log Out";
 }
 
-.user-answers{
+.user-answers {
     font-size: 4vw;
     float: left;
     width: 44%;
@@ -90,7 +90,8 @@ button:hover span {
     border-radius: 2%;
     color: whitesmoke;
 }
-.correct-answers{
+
+.correct-answers {
     font-size: 4vw;
     backdrop-filter: blur(0.3px);
     text-align: center;
@@ -102,8 +103,9 @@ button:hover span {
     border-radius: 2%;
     color: whitesmoke;
 }
-.go-home{
-    border-radius:10%;
+
+.go-home {
+    border-radius: 10%;
     height: 10%;
     cursor: pointer;
     font-family: cursive;

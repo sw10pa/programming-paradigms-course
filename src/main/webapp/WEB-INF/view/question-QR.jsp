@@ -1,11 +1,5 @@
 <%@ page import="PPC.model.Question" %>
-<%@ page import="PPC.model.User" %><%--
-  Created by IntelliJ IDEA.
-  User: Niko
-  Date: 7/31/2020
-  Time: 3:20 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="PPC.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -42,15 +36,15 @@
     </div>
 </div>
 <div class="main">
-<form class="QR" action="/quiz" method = "post">
+    <form class="QR" action="/quiz" method="post">
 
-    <%
+            <%
         Question question = (Question) request.getAttribute("question");
         out.write("<div class = \"p\">" + question.getQuestionStructure().get(0) + "</div>");
     %>
 
-    <input class="blank" type = "text" name = "answer" placeholder = "enter your answer"/> <br>
-    <button type = "submit" >SUBMIT</button>
+        <input class="blank" type="text" name="answer" placeholder="enter your answer"/> <br>
+        <button type="submit">SUBMIT</button>
 </div>
 </form>
 </body>

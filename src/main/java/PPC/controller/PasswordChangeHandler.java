@@ -45,12 +45,12 @@ public class PasswordChangeHandler {
 
     @PostMapping("/change-password")
     public ModelAndView post(HttpSession ses, HttpServletResponse resp,
-                     @RequestParam String currPassword,
-                     @RequestParam String newPassword) throws IOException, SQLException {
+                             @RequestParam String currPassword,
+                             @RequestParam String newPassword) throws IOException, SQLException {
         User user = (User) ses.getAttribute("user");
         ModelAndView ret = new ModelAndView("change-password");
         currPassword = AuthenticationHandler.hashPassword(currPassword);
-        if(illegalCredentials(user, currPassword, newPassword, ret)) return ret;
+        if (illegalCredentials(user, currPassword, newPassword, ret)) return ret;
         dbManager.setPassword(user.getEmail(), AuthenticationHandler.hashPassword(newPassword));
         ses.setAttribute("success", "Password changed successfully");
         resp.sendRedirect("/");
@@ -60,12 +60,12 @@ public class PasswordChangeHandler {
     private boolean illegalCredentials(User user,
                                        String currPassword,
                                        String newPassword,
-                                       ModelAndView ret){
-        if(newPassword.length() == 0){
+                                       ModelAndView ret) {
+        if (newPassword.length() == 0) {
             ret.addObject("error", "New password cannot be empty");
             return true;
         }
-        if(!currPassword.equals(user.getPassword())) {
+        if (!currPassword.equals(user.getPassword())) {
             ret.addObject("error", "Wrong current password");
             return true;
         }
@@ -73,14 +73,14 @@ public class PasswordChangeHandler {
     }
 
     @GetMapping("/reset-password")
-    public ModelAndView loadResetPage(){
+    public ModelAndView loadResetPage() {
         return new ModelAndView("reset-password");
     }
 
     @PostMapping("/reset-password")
     public ModelAndView resetPassword(HttpServletResponse resp, HttpSession ses, @RequestParam String username) throws SQLException, IOException {
         User user = dbManager.getUserByEmail(username);
-        if(user == null) {
+        if (user == null) {
             ModelAndView ret = new ModelAndView("reset-password");
             ret.addObject("error", "Username doesn't exist");
             return ret;

@@ -1,13 +1,7 @@
 <%@ page import="PPC.database.PPCDatabase" %>
 <%@ page import="PPC.database.PPCDatabaseManager" %>
 <%@ page import="PPC.model.Lecture" %>
-<%@ page import="PPC.model.User" %><%--
-  Created by IntelliJ IDEA.
-  User: Whiskeyjack
-  Date: 31-Jul-20
-  Time: 23:31
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="PPC.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -53,37 +47,37 @@
     </div>
 </div>
 
-<div class = "title"><% out.write(lecture.getLectureName()); %> </div>
+<div class="title"><% out.write(lecture.getLectureName()); %></div>
 
-<div class = "main">
-    <form class = "form" action = "edit-quiz" method = "POST" class = "TF">
+<div class="main">
+    <form class="form" action="edit-quiz" method="POST" class="TF">
         <p>True or False</p>
-        <input name="lectureId" type = "hidden" value = "${lectureId}">
-        <input name="questionType" type = "hidden" value = "TF">
-        <input type = "text" name = "question" placeholder="Enter question"> <br>
-        <input type ="radio" name = "answer" value = "True"> True <br>
-        <input type ="radio" name = "answer" value = "False"> False <br>
-        <button class = "button">Add Question</button>
+        <input name="lectureId" type="hidden" value="${lectureId}">
+        <input name="questionType" type="hidden" value="TF">
+        <input type="text" name="question" placeholder="Enter question"> <br>
+        <input type="radio" name="answer" value="True"> True <br>
+        <input type="radio" name="answer" value="False"> False <br>
+        <button class="button">Add Question</button>
     </form>
-    <form class = "form" action = "edit-quiz" method = "POST" class = "MC">
+    <form class="form" action="edit-quiz" method="POST" class="MC">
         <p>Multiple Choice</p>
-        <input name="lectureId" type = "hidden" value = "${lectureId}">
-        <input name="questionType" type = "hidden" value = "MC">
-        <input type = "text" name = "question" placeholder="Enter question"> <br>
-        <input type ="text" name = "answer" placeholder="Enter correct answer"><br>
-        <input type ="text" name = "wrongAnswer" placeholder="Enter wrong answer"><br>
-        <input type ="text" name = "wrongAnswer" placeholder="Enter wrong answer"><br>
-        <input type ="text" name = "wrongAnswer" placeholder="Enter wrong answer"><br>
-        <button class = "button">Add Question</button>
+        <input name="lectureId" type="hidden" value="${lectureId}">
+        <input name="questionType" type="hidden" value="MC">
+        <input type="text" name="question" placeholder="Enter question"> <br>
+        <input type="text" name="answer" placeholder="Enter correct answer"><br>
+        <input type="text" name="wrongAnswer" placeholder="Enter wrong answer"><br>
+        <input type="text" name="wrongAnswer" placeholder="Enter wrong answer"><br>
+        <input type="text" name="wrongAnswer" placeholder="Enter wrong answer"><br>
+        <button class="button">Add Question</button>
     </form>
 
-    <form class = "form" action = "edit-quiz" method = "POST" class = "QR">
+    <form class="form" action="edit-quiz" method="POST" class="QR">
         <p>Question Response</p>
-        <input name="lectureId" type = "hidden" value = "${lectureId}">
-        <input name="questionType" type = "hidden" value = "QR">
-        <input type = "text" name = "question" placeholder = "Enter question"> <br>
-        <input type = "text" name = "answer" placeholder = "Enter correct answer"> <br>
-        <button class = "button">Add Question</button>
+        <input name="lectureId" type="hidden" value="${lectureId}">
+        <input name="questionType" type="hidden" value="QR">
+        <input type="text" name="question" placeholder="Enter question"> <br>
+        <input type="text" name="answer" placeholder="Enter correct answer"> <br>
+        <button class="button">Add Question</button>
     </form>
 
 </div>

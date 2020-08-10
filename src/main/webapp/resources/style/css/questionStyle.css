@@ -88,10 +88,10 @@ button:hover span {
     margin-top: 3%;
     margin-left: 17%;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-    border-radius:10%;
+    border-radius: 10%;
 }
 
-.TF{
+.TF {
     height: 100%;
     font-size: 2.5vw;
     color: rebeccapurple;
@@ -99,19 +99,21 @@ button:hover span {
     font-family: curisve;
     font-weight: bold;;
 }
-.p{
+
+.p {
     overflow-wrap: break-word;
     margin-left: 6%;
     margin-right: 6%;
     margin-bottom: 10%;
 }
-.answer-container{
+
+.answer-container {
     font-size: 2vw;
     padding-left: 35%;
 }
 
 
-.TF button{
+.TF button {
     margin-top: 5%;
     margin-left: 35%;
     width: 20%;
@@ -122,7 +124,8 @@ button:hover span {
     background-color: #b196bb;
 
 }
- button:hover, .button:active, .button:focus {
+
+button:hover, .button:active, .button:focus {
     background-image: radial-gradient(#cd98cd, #b171c2, #bb6abb);
 }
 
@@ -134,7 +137,8 @@ button:hover span {
     font-family: curisve;
     font-weight: bold;
 }
-.QR button{
+
+.QR button {
     margin-top: 10%;
     margin-left: 35%;
     width: 20%;
@@ -145,7 +149,8 @@ button:hover span {
     background-color: #b196bb;
 
 }
-.MC{
+
+.MC {
     height: 100%;
     font-size: 2.5vw;
     color: rebeccapurple;
@@ -153,7 +158,8 @@ button:hover span {
     font-family: curisve;
     font-weight: bold;;
 }
-.MC button{
+
+.MC button {
     margin-left: 35%;
     margin-bottom: 10%;
     width: 20%;
@@ -163,7 +169,8 @@ button:hover span {
     color: purple;
     background-color: #b196bb;
 }
-.blank{
+
+.blank {
     font-family: cursive;
     border-radius: 10%;
     margin-left: 20%;

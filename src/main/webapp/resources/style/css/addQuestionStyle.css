@@ -104,21 +104,21 @@ button:hover span {
     font-weight: bold;
 }
 
-.form{
+.form {
     height: 100%;
     width: 28%;
     margin-right: 4%;
     float: left;
-    position:relative;
+    position: relative;
 }
 
-input[type=text]{
+input[type=text] {
     margin-top: 2%;
     height: 10%;
     width: 80%;
 }
 
-.button{
+.button {
     position: absolute;
     bottom: 0;
     left: 0;

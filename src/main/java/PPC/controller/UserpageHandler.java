@@ -32,7 +32,7 @@ public class UserpageHandler {
 
     @PostMapping("/change-status")
     public void changeStatus(HttpSession ses, HttpServletResponse resp,
-                @RequestParam String email) throws SQLException, IOException {
+                             @RequestParam String email) throws SQLException, IOException {
 
         User admin = (User) ses.getAttribute("user");
         if (!admin.getStatus().equals(User.ADMINISTRATOR)) return;
